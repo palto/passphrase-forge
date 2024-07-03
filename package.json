@@ -1,6 +1,6 @@
 {
   "name": "passphrase-forge",
-  "version": "0.1.0",
+  "version": "2024.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
