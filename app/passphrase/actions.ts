@@ -7,12 +7,13 @@ const passwordFileUrl = process.env.PASSWORD_LIST_URL as string;
 async function getPasswordList() {
   'use server'
   const response = await fetch(passwordFileUrl)
-  const passwords = await response.text()
-  const passwordList = passwords.split('\n');
-  return passwordList.map(password => password.trim());
+  const wordsFile = await response.text()
+  const wordList = wordsFile.split('\n').map(password => password.trim());
+  console.info( `Loaded ${wordList.length} words`);
+  return wordList;
 }
 
-const cachedGetWordList = unstable_cache(getPasswordList);
+const cachedGetWordList = unstable_cache(getPasswordList, ['password_list', passwordFileUrl]);
 
 function getRandomWord(passwordList: string[]) {
   return passwordList[Math.floor(Math.random() * passwordList.length)];
