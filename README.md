@@ -20,7 +20,7 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] Add a button to generate a new passphrase.
 - [x] Dark mode
 - [x] Prettier
-- [ ] i18n
+- [x] i18n
 - [ ] Backwards compatible API
 - [ ] Release process
 - [ ] AI augmented passphrase
