@@ -21,6 +21,7 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] Dark mode
 - [x] Prettier
 - [x] i18n
-- [ ] Backwards compatible API
+- [x] Backwards compatible API
+- [ ] Add description of the service
 - [ ] Release process
 - [ ] AI augmented passphrase
