@@ -44,7 +44,9 @@ function PasswordGeneratorComponent({
         />
         <Clipboard.WithIcon valueToCopy={passphrase} />
       </div>
-      <Button onClick={generateNewPassword}>{t("generate")}</Button>
+      <Button color="blue" onClick={generateNewPassword}>
+        {t("generate")}
+      </Button>
     </>
   );
 }
