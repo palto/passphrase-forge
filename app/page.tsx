@@ -7,7 +7,7 @@ export default function Home() {
   const t = useTranslations("Home");
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
-      <h1 className="text-2xl">{t("title")}</h1>
+      <h1 className="text-2xl">{t("welcome")}</h1>
       <hr></hr>
       <PassphraseComponent />
       <DarkThemeToggle />

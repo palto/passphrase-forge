@@ -3,7 +3,7 @@
     "title": "Salasanaseppä"
   },
   "Home": {
-    "title": "Salasanaseppä"
+    "welcome": "Tervetuloa Salasanaseppään!"
   },
   "PassphraseComponent": {
     "generate": "Tao uusi salasana",

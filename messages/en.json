@@ -3,7 +3,7 @@
     "title": "Passphrase Forge"
   },
   "Home": {
-    "title": "Passphrase Forge"
+    "welcome": "Welcome to Passphrase Forge!"
   },
   "PassphraseComponent": {
     "generate": "Forge new passphrase",
