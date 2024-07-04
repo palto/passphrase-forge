@@ -1,15 +1,18 @@
 export class PasswordGenerator {
-  private readonly wordCount;
+  private readonly totalWords;
+  private readonly wordCount = 3;
   constructor(private readonly passwordList: string[]) {
-    this.wordCount = passwordList.length;
+    this.totalWords = passwordList.length;
   }
 
   getRandomWord() {
-    return this.passwordList[Math.floor(Math.random() * this.wordCount)];
+    return this.passwordList[Math.floor(Math.random() * this.totalWords)];
   }
 
   generate() {
-    const words = Array.from({ length: 4 }, () => this.getRandomWord());
+    const words = Array.from({ length: this.wordCount }, () =>
+      this.getRandomWord(),
+    );
     const number = Math.floor(Math.random() * 990) + 10;
     words.push(number.toString());
     words.sort(() => Math.random() - 0.5);

@@ -22,6 +22,8 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] Prettier
 - [x] i18n
 - [x] Backwards compatible API
-- [ ] Add description of the service
+- [x] Add description of the service
+- [ ] Navbar with dark mode and language toggle
 - [ ] Release process
 - [ ] AI augmented passphrase
+- [ ] Wordlist in database
