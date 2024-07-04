@@ -2,7 +2,7 @@
 import useSWR from 'swr';
 import React, {useState} from 'react';
 import {PasswordGenerator} from '@/app/passphrase/password-generator';
-import {Button, Label, TextInput} from 'flowbite-react';
+import {Button, TextInput, Clipboard} from 'flowbite-react';
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 export function PassphraseComponent() {
@@ -28,8 +28,10 @@ function PasswordGeneratorComponent({generator}: {
     setPassphrase(generator.generate());
   }
   return <>
-    <Label htmlFor="passphrase">Your passphrase</Label>
-    <TextInput id="passphrase" readOnly value={passphrase} />
+    <div className="relative w-full">
+      <TextInput id="passphrase" readOnly value={passphrase} className="w-full"/>
+      <Clipboard.WithIcon valueToCopy={passphrase}/>
+    </div>
     <Button onClick={generateNewPassword}>Forge new passphrase</Button>
   </>
 }

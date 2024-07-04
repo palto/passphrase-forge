@@ -15,8 +15,11 @@ The deployment is done using Vercel using Github integration from the main branc
 ## TODO
 
 - [x] Download wordlist in the clientside
-- [ ] Release process
-- [ ] Add a button to copy the passphrase to the clipboard.
+- [x] Add a button to copy the passphrase to the clipboard.
 - [x] Add a button to generate a new passphrase.
 - [x] Dark mode
+- [ ] Prettier
 - [ ] i18n
+- [ ] Backwards compatible API
+- [ ] Release process
+- [ ] AI augmented passphrase
