@@ -31,13 +31,15 @@ function PasswordGeneratorComponent({
   const generateNewPassword = () => {
     setPassphrase(generator.generate());
   };
+  const inputRef = React.useRef<HTMLInputElement>(null);
   return (
     <>
       <div className="relative w-full">
         <TextInput
+          ref={inputRef}
           id="passphrase"
-          readOnly
           value={passphrase}
+          onChange={(e) => setPassphrase(e.target.value)}
           className="w-full"
         />
         <Clipboard.WithIcon valueToCopy={passphrase} />
