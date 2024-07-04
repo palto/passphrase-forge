@@ -5,6 +5,9 @@
   "Home": {
     "welcome": "Welcome to Passphrase Forge!"
   },
+  "AppNavbar": {
+    "brandTitle": "Passphrase Forge"
+  },
   "PassphraseComponent": {
     "generate": "Forge new passphrase",
     "loading": "Loading words..."

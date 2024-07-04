@@ -5,6 +5,9 @@
   "Home": {
     "welcome": "Tervetuloa Salasanaseppään!"
   },
+  "AppNavbar": {
+    "brandTitle": "Salasanaseppä"
+  },
   "PassphraseComponent": {
     "generate": "Tao uusi salasana",
     "loading": "Ladataan sanoja..."
