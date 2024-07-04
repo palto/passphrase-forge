@@ -24,3 +24,5 @@ async function getPasswordGenerator() {
   }
   return passwordGenerator;
 }
+
+export const dynamic = "force-dynamic";
