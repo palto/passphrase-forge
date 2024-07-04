@@ -1,0 +1,12 @@
+{
+  "head": {
+    "title": "Passphrase Forge"
+  },
+  "Home": {
+    "title": "Passphrase Forge"
+  },
+  "PassphraseComponent": {
+    "generate": "Forge new passphrase",
+    "loading": "Loading words..."
+  }
+}
