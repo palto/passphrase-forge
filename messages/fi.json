@@ -6,7 +6,11 @@
     "welcome": "Tervetuloa Salasanaseppään!"
   },
   "AppNavbar": {
-    "brandTitle": "Salasanaseppä"
+    "brandTitle": "Salasanaseppä",
+    "lang": {
+      "fi": "Suomi",
+      "en": "English"
+    }
   },
   "PassphraseComponent": {
     "generate": "Tao uusi salasana",

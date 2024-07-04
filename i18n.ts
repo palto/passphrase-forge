@@ -1,6 +1,6 @@
 import { getRequestConfig } from "next-intl/server";
 import Negotiator from "negotiator";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 
 const supportedLanguages = ["en", "fi"];
 const defaultLanguage = "en";
@@ -16,9 +16,14 @@ export default getRequestConfig(async () => {
     },
   }).languages();
 
-  const locale =
+  let locale =
     languages.find((language) => supportedLanguages.includes(language)) ??
     defaultLanguage;
+
+  const cookieLocale = cookies().get("NEXT_LOCALE");
+  if (cookieLocale) {
+    locale = cookieLocale.value;
+  }
 
   // Turbopack doesn't support dynamic imports yet
   const messages =

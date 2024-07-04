@@ -23,7 +23,7 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] i18n
 - [x] Backwards compatible API
 - [x] Add description of the service
-- [ ] Navbar with dark mode and language toggle
+- [x] Navbar with dark mode and language toggle
 - [ ] Release process
 - [ ] AI augmented passphrase
 - [ ] Wordlist in database

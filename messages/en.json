@@ -6,7 +6,11 @@
     "welcome": "Welcome to Passphrase Forge!"
   },
   "AppNavbar": {
-    "brandTitle": "Passphrase Forge"
+    "brandTitle": "Passphrase Forge",
+    "lang": {
+      "fi": "Suomi",
+      "en": "English"
+    }
   },
   "PassphraseComponent": {
     "generate": "Forge new passphrase",
