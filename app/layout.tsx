@@ -23,7 +23,7 @@ export default async function RootLayout({
         <ThemeModeScript />
       </head>
       <body
-        className={`${inter.className} bg-white text-gray-600 dark:bg-gray-900 dark:text-gray-400`}
+        className={`${inter.className} bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300`}
       >
         <Flowbite>
           <NextIntlClientProvider messages={messages}>
