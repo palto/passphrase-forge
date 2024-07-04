@@ -9,15 +9,15 @@ export class PasswordGenerator {
   }
 
   generate() {
-    const words = Array.from({length: 4}, () => this.getRandomWord());
+    const words = Array.from({ length: 4 }, () => this.getRandomWord());
     const number = Math.floor(Math.random() * 990) + 10;
     words.push(number.toString());
     words.sort(() => Math.random() - 0.5);
-    return words.join('-');
+    return words.join("-");
   }
 
   static fromText(text: string) {
-    const wordList = text.split('\n').map(password => password.trim());
+    const wordList = text.split("\n").map((password) => password.trim());
     return new PasswordGenerator(wordList);
   }
 }
