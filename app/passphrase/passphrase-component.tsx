@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { PasswordGenerator } from "@/app/passphrase/password-generator";
 import { Button, TextInput, Clipboard } from "flowbite-react";
 import { useTranslations } from "next-intl";
+import { aiPassphraseEnhancement } from "@/app/(ai)/actions";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 export function PassphraseComponent() {
@@ -31,12 +32,10 @@ function PasswordGeneratorComponent({
   const generateNewPassword = () => {
     setPassphrase(generator.generate());
   };
-  const inputRef = React.useRef<HTMLInputElement>(null);
   return (
     <>
       <div className="relative w-full">
         <TextInput
-          ref={inputRef}
           id="passphrase"
           value={passphrase}
           onChange={(e) => setPassphrase(e.target.value)}
@@ -44,9 +43,45 @@ function PasswordGeneratorComponent({
         />
         <Clipboard.WithIcon valueToCopy={passphrase} />
       </div>
-      <Button color="blue" onClick={generateNewPassword}>
-        {t("generate")}
-      </Button>
+      <div className="flex w-full justify-center space-x-4">
+        <Button color="blue" onClick={generateNewPassword}>
+          {t("generate")}
+        </Button>
+        <AiPasshpraseButton
+          onPassphrase={(passphrase) => setPassphrase(passphrase)}
+          generator={generator}
+        />
+      </div>
     </>
+  );
+}
+
+export function AiPasshpraseButton(props: {
+  readonly generator: PasswordGenerator;
+  readonly onPassphrase: (passphrase: string) => void;
+}) {
+  const t = useTranslations("PassphraseComponent");
+  const [isLoading, setIsLoading] = useState(false);
+  const callAi = async () => {
+    setIsLoading(true);
+    try {
+      const passphrase = await aiPassphraseEnhancement(
+        props.generator.generate(),
+      );
+      props.onPassphrase(passphrase);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return (
+    <Button
+      onClick={callAi}
+      isProcessing={isLoading}
+      outline
+      gradientDuoTone="purpleToPink"
+    >
+      {t("aiGenerate")}
+    </Button>
   );
 }
