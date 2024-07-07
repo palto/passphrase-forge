@@ -21,6 +21,7 @@ export async function aiPassphraseEnhancement(
     
     Tee sanoista lause joka on kieliopillisesti oikein ja lyhyt. 
     Voit taivuttaa sanoja mielesi mukaan. Kaikkia sanoja ei ole pakko käyttää. Lauseessa pitää olla mukana numero, muuten se ei kelpaa.
+    Älä muuta numeroa kirjaimiksi
     
     Jos lauseessa on yli 7 sanaa tai vähemmän kuin 4 sanaa, tee lause uudestaan. Jatka niin kauan kunnes nämä ehdot täyttyvät
     

@@ -13,7 +13,8 @@ export class PasswordGenerator {
     const words = Array.from({ length: this.wordCount }, () =>
       this.getRandomWord(),
     );
-    const number = Math.floor(Math.random() * 990) + 10;
+    // Number between 1 and 9
+    const number = Math.floor(Math.random() * 9) + 1;
     words.push(number.toString());
     words.sort(() => Math.random() - 0.5);
     return words.join("-");
