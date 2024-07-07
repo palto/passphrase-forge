@@ -4,7 +4,7 @@ import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
 
 const schema = z.object({
-  lause: z.string(),
+  passphrase: z.string(),
 });
 
 export async function aiPassphraseEnhancement(
@@ -22,12 +22,14 @@ export async function aiPassphraseEnhancement(
     Tee sanoista lause joka on kieliopillisesti oikein ja lyhyt. 
     Voit taivuttaa sanoja mielesi mukaan. Kaikkia sanoja ei ole pakko käyttää. Lauseessa pitää olla mukana numero, muuten se ei kelpaa.
     
-    Anna lopullinen teksti JSON-muodossa avaimella "lause"
+    Jos lauseessa on yli 7 sanaa tai vähemmän kuin 4 sanaa, tee lause uudestaan. Jatka niin kauan kunnes nämä ehdot täyttyvät
+    
+    Anna lopullinen teksti JSON-muodossa avaimella "passphrase"
     `,
     prompt: "Sanat: " + inputPassphrase,
     schema,
   });
-  let passphrase = result.object.lause;
+  let passphrase = result.object.passphrase;
   // Remove characters , . : from passphrase
   passphrase = passphrase.replace(/[,.:]/g, "");
   // Add dash between words
