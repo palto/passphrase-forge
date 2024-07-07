@@ -1,28 +1,36 @@
 "use server";
-import { generateText } from "ai";
+import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
+import { z } from "zod";
+
+const schema = z.object({
+  lause: z.string(),
+});
 
 export async function aiPassphraseEnhancement(
   inputPassphrase: string,
 ): Promise<string> {
-  const result = await generateText({
+  const result = await generateObject({
     model: openai("gpt-4o"),
     system: `
-    Annan sinulle tehtävän joka on suoritettava vaiheissa. 
-Annan sinulle väliviivalla eroteltuja sanoja ja numeron.
-
-1. Erottele sanat ja numerot listaksi
-2. Selvitä jokaisen sanan kohdalla onko sille lyhyempi synonyymi. Jos on niin käytetään sitä. Jos kyseessä on numero, käytä sitä sellaisenaan
-3. Listaa valitsemasi sanat alekkain
-4. Tee valitsemistasi sanoista 5 lyhyttä lausetta. Taivuta sanat jotta lause on sujuvampi. Lauseen pitää sisältää myös numero
-5. Valitse lauseista selkein ja yksinkertaisin lause jossa on numero
-5. Laita lauseen eteen teksti "VASTAUS: " ja korvaa välilyönnit yhdysviivalla sekä poista pilkut ja pisteet
+    Annan sinulle tehtävän, joka on suoritettava vaiheissa. Käytä aina samaa sanamuotoa kuin ohjeissa ja varmista, että noudatat jokaista vaihetta tarkasti.
+    
+    Käyttäjä antaa sinulle sanoja väliviivalla eroteltuna sekä yhden numeron.
+    
+    Keksi 3 eri synonyymiä jokaiselle sanalle ja valitse niistä sellainen jonka yläasteen käynyt ymmärtää.
+    
+    Tee sanoista lause joka on kieliopillisesti oikein ja lyhyt. 
+    Voit taivuttaa sanoja mielesi mukaan. Kaikkia sanoja ei ole pakko käyttää. Lauseessa pitää olla mukana numero, muuten se ei kelpaa.
+    
+    Anna lopullinen teksti JSON-muodossa avaimella "lause"
     `,
-    prompt: inputPassphrase,
+    prompt: "Sanat: " + inputPassphrase,
+    schema,
   });
-  const text = result.text;
-  // Find the passphrase from the text that is prefixed with "VASTAUS: "
-  const parts = text.split("VASTAUS: ");
-  // Answer is the last part
-  return parts[parts.length - 1];
+  let passphrase = result.object.lause;
+  // Remove characters , . : from passphrase
+  passphrase = passphrase.replace(/[,.:]/g, "");
+  // Add dash between words
+  passphrase = passphrase.replace(/ /g, "-");
+  return passphrase;
 }
