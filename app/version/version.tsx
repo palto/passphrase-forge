@@ -33,13 +33,13 @@ const components: MDXComponents = {
 };
 
 export async function Version() {
-  if (!process.env.npm_package_version) {
+  if (!process.env.NEXT_PUBLIC_VERSION) {
     return null;
   }
   const changeLogContents = await fs.promises.readFile("CHANGELOG.md", "utf-8");
 
   return (
-    <VersionDisplay version={process.env.npm_package_version}>
+    <VersionDisplay version={process.env.NEXT_PUBLIC_VERSION}>
       <MDXRemote source={changeLogContents} components={components} />
     </VersionDisplay>
   );
