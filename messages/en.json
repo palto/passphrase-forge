@@ -3,7 +3,11 @@
     "title": "Passphrase Forge"
   },
   "Home": {
-    "welcome": "Welcome to Passphrase Forge!"
+    "welcome": "Welcome to Passphrase Forge!",
+    "changelog": {
+      "title": "Change log",
+      "close": "Close"
+    }
   },
   "AppNavbar": {
     "brandTitle": "Passphrase Forge",

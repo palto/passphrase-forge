@@ -3,7 +3,11 @@
     "title": "Salasanaseppä"
   },
   "Home": {
-    "welcome": "Tervetuloa Salasanaseppään!"
+    "welcome": "Tervetuloa Salasanaseppään!",
+    "changelog": {
+      "title": "Muutoshistoria",
+      "close": "Sulje"
+    }
   },
   "AppNavbar": {
     "brandTitle": "Salasanaseppä",

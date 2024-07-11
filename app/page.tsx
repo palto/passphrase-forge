@@ -27,9 +27,12 @@ export default async function Home() {
       <HR className="w-full" />
       <AppDetails />
       {process.env.npm_package_version && (
-        <VersionDisplay version={process.env.npm_package_version}>
-          <MDXRemote source={changeLogContents} />
-        </VersionDisplay>
+        <>
+          <HR className="w-full" />
+          <VersionDisplay version={process.env.npm_package_version}>
+            <MDXRemote source={changeLogContents} />
+          </VersionDisplay>
+        </>
       )}
     </main>
   );
