@@ -5,6 +5,7 @@ import { ThemeModeScript, Flowbite } from "flowbite-react";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { AppNavbar } from "@/app/app-navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +28,7 @@ export default async function RootLayout({
       >
         <Flowbite>
           <NextIntlClientProvider messages={messages}>
+            <AppNavbar />
             {children}
           </NextIntlClientProvider>
         </Flowbite>

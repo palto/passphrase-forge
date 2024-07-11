@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { PasswordGenerator } from "@/app/passphrase/password-generator";
 import { Button, TextInput, Clipboard } from "flowbite-react";
 import { useTranslations } from "next-intl";
-import { aiPassphraseEnhancement } from "@/app/(ai)/actions";
+import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 export function PassphraseComponent() {
