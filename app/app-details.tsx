@@ -1,8 +1,8 @@
 import React from "react";
-import { useLocale } from "next-intl";
+import { getLocale } from "next-intl/server";
 
-export function AppDetails() {
-  const locale = useLocale();
+export async function AppDetails() {
+  const locale = await getLocale();
   return (
     <>
       {locale === "fi" && <DetailsFi />}
