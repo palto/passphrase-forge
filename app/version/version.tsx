@@ -3,6 +3,7 @@ import * as fs from "node:fs";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import React from "react";
 import { MDXComponents } from "mdx/types";
+import path from "node:path";
 
 const components: MDXComponents = {
   h1: (props) => (
@@ -36,7 +37,8 @@ export async function Version() {
   if (!process.env.NEXT_PUBLIC_VERSION) {
     return null;
   }
-  const changeLogContents = await fs.promises.readFile("CHANGELOG.md", "utf-8");
+  const changeLogPath = path.join(process.cwd(), "CHANGELOG.md");
+  const changeLogContents = fs.readFileSync(changeLogPath, "utf-8");
 
   return (
     <VersionDisplay version={process.env.NEXT_PUBLIC_VERSION}>
