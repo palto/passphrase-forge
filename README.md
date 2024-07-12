@@ -24,6 +24,8 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] Backwards compatible API
 - [x] Add description of the service
 - [x] Navbar with dark mode and language toggle
-- [ ] Release process
+- [x] Changelog
 - [x] AI augmented passphrase
+- [ ] Passphrase Generator rules
+- [ ] Content from CMS
 - [ ] Wordlist in database
