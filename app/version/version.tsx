@@ -7,17 +7,17 @@ import path from "node:path";
 
 const components: MDXComponents = {
   h1: (props) => (
-    <h1 {...props} className="text-2xl">
+    <h1 {...props} className="text-2xl py-4">
       {props.children}
     </h1>
   ),
   h2: (props) => (
-    <h2 {...props} className="text-xl">
+    <h2 {...props} className="text-xl py-4">
       {props.children}
     </h2>
   ),
   h3: (props) => (
-    <h3 {...props} className="text-xl">
+    <h3 {...props} className="text-xl py-2">
       {props.children}
     </h3>
   ),

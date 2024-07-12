@@ -1,19 +1,21 @@
 "use client";
 import useSWR from "swr";
-import React, { useState } from "react";
-import { PasswordGenerator } from "@/app/passphrase/password-generator";
-import { Button, TextInput, Clipboard } from "flowbite-react";
+import React, { useCallback, useState } from "react";
+import {
+  defaultGeneratorSettings,
+  GeneratorSettings,
+  PasswordGenerator,
+} from "@/app/passphrase/password-generator";
+import { Button, TextInput, Clipboard, HR } from "flowbite-react";
 import { useTranslations } from "next-intl";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import { SettingsButton } from "@/app/passphrase/settings-button";
+import { useLocalStorage } from "usehooks-ts";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 export function PassphraseComponent() {
   const t = useTranslations("PassphraseComponent");
-  const { data: generator } = useSWR(wordListUrl, async () => {
-    const response = await fetch(wordListUrl);
-    const text = await response.text();
-    return PasswordGenerator.fromText(text);
-  });
+  const generator = usePasswordGenerator();
 
   if (!generator) {
     return <div>{t("loading")}</div>;
@@ -22,16 +24,40 @@ export function PassphraseComponent() {
   return <PasswordGeneratorComponent generator={generator} />;
 }
 
+function usePasswordGenerator() {
+  const { data: generator } = useSWR(wordListUrl, async () => {
+    const response = await fetch(wordListUrl);
+    const text = await response.text();
+    return PasswordGenerator.fromText(text);
+  });
+  return generator;
+}
+
 function PasswordGeneratorComponent({
   generator,
 }: {
   readonly generator: PasswordGenerator;
 }) {
   const t = useTranslations("PassphraseComponent");
-  const [passphrase, setPassphrase] = useState(generator.generate());
-  const generateNewPassword = () => {
-    setPassphrase(generator.generate());
-  };
+  const [generatorSettings, setGeneratorSettings] = useLocalStorage(
+    "generatorSettings",
+    defaultGeneratorSettings,
+  );
+  const [passphrase, setPassphrase] = useState<string>(
+    generator.generate(generatorSettings),
+  );
+  const generateNewPassword = useCallback(() => {
+    setPassphrase(generator.generate(generatorSettings));
+  }, [generatorSettings]);
+
+  const updateSettings = useCallback(
+    (settings: GeneratorSettings) => {
+      setGeneratorSettings(settings);
+      setPassphrase(generator.generate(settings));
+    },
+    [generatorSettings],
+  );
+
   return (
     <>
       <div className="relative w-full">
@@ -43,15 +69,17 @@ function PasswordGeneratorComponent({
         />
         <Clipboard.WithIcon valueToCopy={passphrase} />
       </div>
-      <div className="flex w-full justify-center space-x-4">
+      <div className="flex w-full space-x-4">
         <Button color="blue" onClick={generateNewPassword}>
           {t("generate")}
         </Button>
         <AiPasshpraseButton
-          onPassphrase={(passphrase) => setPassphrase(passphrase)}
+          onPassphrase={setPassphrase}
           generator={generator}
         />
+        <SettingsButton value={generatorSettings} onChange={updateSettings} />
       </div>
+      <HR />
     </>
   );
 }

@@ -19,6 +19,12 @@
   "PassphraseComponent": {
     "generate": "Tao uusi salasana",
     "aiGenerate": "Tekoälytao uusi salasana",
-    "loading": "Ladataan sanoja..."
+    "loading": "Ladataan sanoja...",
+    "settings": {
+      "title": "Salasanasepän asetukset",
+      "wordCount": "Sanoja: {count}",
+      "separator": "Erotin",
+      "numberCount": "Numeroita: {count}"
+    }
   }
 }

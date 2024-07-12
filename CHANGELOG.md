@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2024.2.0] - 2024-07-12
+
+### Added
+- Passphrase Generator settings
+
 ## [2024.1.0] - 2024-07-07
 
 ### Added

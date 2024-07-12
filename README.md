@@ -26,6 +26,6 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] Navbar with dark mode and language toggle
 - [x] Changelog
 - [x] AI augmented passphrase
-- [ ] Passphrase Generator rules
+- [x] Passphrase Generator settings
 - [ ] Content from CMS
 - [ ] Wordlist in database

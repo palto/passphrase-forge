@@ -19,6 +19,12 @@
   "PassphraseComponent": {
     "generate": "Forge new passphrase",
     "aiGenerate": "Forge new passphrase with AI",
-    "loading": "Loading words..."
+    "loading": "Loading words...",
+    "settings": {
+      "title": "Passphrase Forge settings",
+      "wordCount": "Words: {count}",
+      "separator": "Separator",
+      "numberCount": "Numbers: {count}"
+    }
   }
 }
