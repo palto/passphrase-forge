@@ -28,6 +28,6 @@ The deployment is done using Vercel using Github integration from the main branc
 - [x] AI augmented passphrase
 - [x] Passphrase Generator settings
 - [x] Analytics
-- [ ] AI augmented passphrase settings
+- [x] AI augmented passphrase settings
 - [ ] Content from CMS
 - [ ] Wordlist in database
