@@ -4,6 +4,12 @@ export type GeneratorSettings = {
   readonly numberCount: number;
 };
 
+export type PassphraseDetails = {
+  readonly passphrase: string;
+  readonly parts: string[];
+  readonly separator: string;
+};
+
 export const defaultGeneratorSettings: GeneratorSettings = {
   wordCount: 3,
   separator: "-",
@@ -23,8 +29,14 @@ export class PasswordGenerator {
   }
 
   generate(generationSettings?: Partial<GeneratorSettings>) {
+    return this.generateDetails(generationSettings).passphrase;
+  }
+
+  generateDetails(
+    generationSettings?: Partial<GeneratorSettings>,
+  ): PassphraseDetails {
     const settings = { ...this.defaultSettings, ...generationSettings };
-    const words = Array.from({ length: settings.wordCount }, () =>
+    const parts = Array.from({ length: settings.wordCount }, () =>
       this.getRandomWord(),
     );
     if (settings.numberCount > 0) {
@@ -32,10 +44,14 @@ export class PasswordGenerator {
         { length: settings.numberCount },
         () => Math.floor(Math.random() * 9) + 1,
       );
-      words.push(numbers.join(""));
+      parts.push(numbers.join(""));
     }
-    words.sort(() => Math.random() - 0.5);
-    return words.join(settings.separator);
+    parts.sort(() => Math.random() - 0.5);
+    return {
+      parts,
+      separator: settings.separator,
+      passphrase: parts.join(settings.separator),
+    };
   }
 
   static fromText(text: string) {

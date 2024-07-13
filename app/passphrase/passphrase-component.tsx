@@ -75,7 +75,7 @@ function PasswordGeneratorComponent({
         </Button>
         <AiPasshpraseButton
           onPassphrase={setPassphrase}
-          generator={generator}
+          generatorSettings={generatorSettings}
         />
         <SettingsButton value={generatorSettings} onChange={updateSettings} />
       </div>
@@ -85,18 +85,18 @@ function PasswordGeneratorComponent({
 }
 
 export function AiPasshpraseButton(props: {
-  readonly generator: PasswordGenerator;
   readonly onPassphrase: (passphrase: string) => void;
+  readonly generatorSettings?: Partial<GeneratorSettings>;
 }) {
   const t = useTranslations("PassphraseComponent");
   const [isLoading, setIsLoading] = useState(false);
   const callAi = async () => {
     setIsLoading(true);
     try {
-      const passphrase = await aiPassphraseEnhancement(
-        props.generator.generate(),
+      const passphraseDetails = await aiPassphraseEnhancement(
+        props.generatorSettings,
       );
-      props.onPassphrase(passphrase);
+      props.onPassphrase(passphraseDetails.passphrase);
     } finally {
       setIsLoading(false);
     }
