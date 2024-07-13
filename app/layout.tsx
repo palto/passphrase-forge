@@ -6,6 +6,7 @@ import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { AppNavbar } from "@/app/app-navbar";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default async function RootLayout({
           <NextIntlClientProvider messages={messages}>
             <AppNavbar />
             {children}
+            <Analytics />
           </NextIntlClientProvider>
         </Flowbite>
       </body>
