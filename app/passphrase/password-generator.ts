@@ -2,6 +2,7 @@ export type GeneratorSettings = {
   readonly wordCount: number;
   readonly separator: string;
   readonly numberCount: number;
+  readonly stripUmlauts?: boolean;
 };
 
 export type PassphraseDetails = {
@@ -14,6 +15,7 @@ export const defaultGeneratorSettings: GeneratorSettings = {
   wordCount: 3,
   separator: "-",
   numberCount: 1,
+  stripUmlauts: true,
 };
 
 export class PasswordGenerator {
@@ -35,23 +37,36 @@ export class PasswordGenerator {
   generateDetails(
     generationSettings?: Partial<GeneratorSettings>,
   ): PassphraseDetails {
-    const settings = { ...this.defaultSettings, ...generationSettings };
-    const parts = Array.from({ length: settings.wordCount }, () =>
-      this.getRandomWord(),
-    );
-    if (settings.numberCount > 0) {
+    const { wordCount, numberCount, stripUmlauts, separator } = {
+      ...this.defaultSettings,
+      ...generationSettings,
+    };
+    const parts = Array.from({ length: wordCount }, () => this.getRandomWord());
+    if (numberCount > 0) {
       const numbers = Array.from(
-        { length: settings.numberCount },
+        { length: numberCount },
         () => Math.floor(Math.random() * 9) + 1,
       );
       parts.push(numbers.join(""));
     }
     parts.sort(() => Math.random() - 0.5);
+    const passphrase = stripUmlauts
+      ? PasswordGenerator.stipUmlauts(parts.join(separator))
+      : parts.join(separator);
+
     return {
       parts,
-      separator: settings.separator,
-      passphrase: parts.join(settings.separator),
+      separator,
+      passphrase,
     };
+  }
+
+  static stipUmlauts(text: string) {
+    return text
+      .replace(/ä/g, "a")
+      .replace(/ö/g, "o")
+      .replace(/Ä/g, "A")
+      .replace(/Ö/g, "O");
   }
 
   static fromText(text: string) {

@@ -2,9 +2,13 @@
 import { generateObject } from "ai";
 import { openai } from "@ai-sdk/openai";
 import { z } from "zod";
-import { PassphraseDetails } from "@/app/passphrase/password-generator";
+import {
+  defaultGeneratorSettings,
+  GeneratorSettings,
+  PassphraseDetails,
+  PasswordGenerator,
+} from "@/app/passphrase/password-generator";
 import { getPasswordGenerator } from "@/app/passphrase/server";
-import { GeneratorSettings } from "@/app/passphrase/settings-button";
 
 const schema = z.object({
   passphrase: z.string(),
@@ -15,7 +19,15 @@ export async function aiPassphraseEnhancement(
 ): Promise<PassphraseDetails> {
   const passwordGenerator = await getPasswordGenerator();
   const details = passwordGenerator.generateDetails(generatorSettings);
-  return await aiEnhance(details);
+  const aiDetails = await aiEnhance(details);
+  const settings = {
+    ...defaultGeneratorSettings,
+    ...generatorSettings,
+  };
+  const passphrase = settings.stripUmlauts
+    ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+    : aiDetails.passphrase;
+  return { ...aiDetails, passphrase };
 }
 
 export async function aiEnhance(

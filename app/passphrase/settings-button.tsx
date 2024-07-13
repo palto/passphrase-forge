@@ -1,13 +1,14 @@
-import { Label, RangeSlider, TextInput, Drawer } from "flowbite-react";
+import {
+  Label,
+  RangeSlider,
+  TextInput,
+  Drawer,
+  ToggleSwitch,
+} from "flowbite-react";
 import { useBoolean } from "usehooks-ts";
 import { useTranslations } from "next-intl";
 import { FaGear } from "react-icons/fa6";
-
-export type GeneratorSettings = {
-  readonly wordCount: number;
-  readonly separator: string;
-  readonly numberCount: number;
-};
+import { GeneratorSettings } from "@/app/passphrase/password-generator";
 
 export function SettingsButton(props: {
   readonly value: GeneratorSettings;
@@ -82,6 +83,20 @@ export function SettingsButton(props: {
                 min={0}
                 max={3}
                 step={1}
+              />
+            </div>
+            <div className="p-4">
+              <Label htmlFor="stripUmlauts">{t("stripUmlauts")}</Label>
+              <ToggleSwitch
+                id="stripUmlauts"
+                checked={generatorSettings.stripUmlauts ?? false}
+                onChange={(checked) => {
+                  setGeneratorSettings({
+                    ...generatorSettings,
+                    stripUmlauts: checked,
+                  });
+                }}
+                label={t("stripUmlauts")}
               />
             </div>
           </Drawer.Items>
