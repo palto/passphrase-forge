@@ -21,6 +21,7 @@
     "aiGenerate": "Forge new passphrase with AI",
     "loading": "Loading words...",
     "settings": {
+      "open": "Settings",
       "title": "Passphrase Forge settings",
       "wordCount": "Words: {count}",
       "separator": "Separator",

@@ -21,6 +21,7 @@
     "aiGenerate": "Tekoälytao uusi salasana",
     "loading": "Ladataan sanoja...",
     "settings": {
+      "open": "Asetukset",
       "title": "Salasanasepän asetukset",
       "wordCount": "Sanoja: {count}",
       "separator": "Erotin",

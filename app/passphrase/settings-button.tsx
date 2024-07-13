@@ -23,9 +23,9 @@ export function SettingsButton(props: {
       <div className="flex items-center justify-center">
         <button
           onClick={open}
-          className="flex rounded-lg w-8 h-8 items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700"
+          className="flex flex-col rounded-lg w-20 h-16 items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700"
         >
-          <FaGear />
+          <FaGear /> {t("open")}
         </button>
       </div>
       <div>
