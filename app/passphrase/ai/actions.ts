@@ -34,7 +34,7 @@ export async function aiEnhance(
   details: PassphraseDetails,
 ): Promise<PassphraseDetails> {
   const result = await generateObject({
-    model: openai("gpt-4o"),
+    model: openai("gpt-4o-mini"),
     system: `
     Annan sinulle tehtävän, joka on suoritettava vaiheissa. Käytä aina samaa sanamuotoa kuin ohjeissa ja varmista, että noudatat jokaista vaihetta tarkasti.
     
