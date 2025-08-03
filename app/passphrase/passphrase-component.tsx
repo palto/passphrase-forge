@@ -111,10 +111,8 @@ export function AiPasshpraseButton(props: {
   return (
     <Button
       onClick={callAi}
-      outline
-      color="purple"
       disabled={isLoading}
-      className="h-16"
+      className="h-16 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0"
     >
       {isLoading ? (
         <>
