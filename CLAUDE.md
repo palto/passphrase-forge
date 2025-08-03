@@ -56,6 +56,7 @@ This is a Next.js 14 app that generates secure passphrases with both traditional
 
 ### Development Notes
 
+- Node.js 22+ required (Flowbite React CLI compatibility issue with Node 20)
 - TypeScript with strict mode enabled
 - Path aliases configured (`@/*` maps to root)
 - ESLint with Next.js and Prettier configurations

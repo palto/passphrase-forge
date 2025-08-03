@@ -20,7 +20,7 @@ A secure and memorable passphrase generator that creates unique passwords using 
 
 ### Prerequisites
 
-- Node.js 20+
+- Node.js 22+ (required for Flowbite React compatibility)
 - npm
 - Vercel CLI ([installation instructions](https://vercel.com/docs/cli))
 
