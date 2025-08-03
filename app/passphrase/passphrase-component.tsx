@@ -6,13 +6,7 @@ import {
   GeneratorSettings,
   PasswordGenerator,
 } from "@/app/passphrase/password-generator";
-import {
-  Button,
-  TextInput,
-  ClipboardWithIcon,
-  HR,
-  Spinner,
-} from "flowbite-react";
+import { Button, TextInput, ClipboardWithIcon, Spinner } from "flowbite-react";
 import { HiSparkles } from "react-icons/hi2";
 import { useTranslations } from "next-intl";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
@@ -95,7 +89,6 @@ function PasswordGeneratorComponent({
         />
         <SettingsButton value={generatorSettings} onChange={updateSettings} />
       </div>
-      <HR />
     </div>
   );
 }
