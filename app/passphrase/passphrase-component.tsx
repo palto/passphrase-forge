@@ -76,7 +76,7 @@ function PasswordGeneratorComponent({
         <ClipboardWithIcon valueToCopy={passphrase} />
       </div>
       <div className="flex w-full space-x-4">
-        <Button color="blue" onClick={generateNewPassword}>
+        <Button color="blue" onClick={generateNewPassword} className="h-16">
           {t("generate")}
         </Button>
         <AiPasshpraseButton
@@ -109,7 +109,13 @@ export function AiPasshpraseButton(props: {
   };
 
   return (
-    <Button onClick={callAi} outline color="purple" disabled={isLoading}>
+    <Button
+      onClick={callAi}
+      outline
+      color="purple"
+      disabled={isLoading}
+      className="h-16"
+    >
       {isLoading ? (
         <>
           <Spinner size="sm" className="me-3" />
