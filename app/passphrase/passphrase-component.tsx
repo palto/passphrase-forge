@@ -54,14 +54,14 @@ function PasswordGeneratorComponent({
   );
   const generateNewPassword = useCallback(() => {
     setPassphrase(generator.generate(generatorSettings));
-  }, [generatorSettings]);
+  }, [generator, generatorSettings]);
 
   const updateSettings = useCallback(
     (settings: GeneratorSettings) => {
       setGeneratorSettings(settings);
       setPassphrase(generator.generate(settings));
     },
-    [generatorSettings],
+    [generator, setGeneratorSettings],
   );
 
   return (

@@ -8,6 +8,7 @@ import {
   NavbarBrand,
 } from "flowbite-react";
 import Link from "next/link";
+import Image from "next/image";
 import React from "react";
 import { useTranslations } from "next-intl";
 import { changeLanguage } from "@/app/changeLanguage";
@@ -18,8 +19,10 @@ export function AppNavbar() {
   return (
     <Navbar fluid rounded>
       <NavbarBrand as={Link} href="/">
-        <img
+        <Image
           src="/anvil-logo.png"
+          width={36}
+          height={36}
           className="mr-3 h-6 sm:h-9"
           alt="Flowbite React Logo"
         />
