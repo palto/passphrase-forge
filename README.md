@@ -20,28 +20,32 @@ A secure and memorable passphrase generator that creates unique passwords using 
 
 ### Prerequisites
 
-- Node.js 20+ 
+- Node.js 20+
 - npm
 - Vercel CLI ([installation instructions](https://vercel.com/docs/cli))
 
 ### Installation
 
 1. Install dependencies:
+
 ```bash
 npm install
 ```
 
 2. Link to the Vercel project:
+
 ```bash
 vercel link
 ```
 
 3. Set up environment variables):
+
 ```bash
 npm run vercel:env
 ```
 
 4. Start the development server:
+
 ```bash
 npm run dev
 ```
