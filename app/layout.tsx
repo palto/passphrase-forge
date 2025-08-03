@@ -42,7 +42,7 @@ export default async function RootLayout({
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations({ namespace: "head" });
+  const t = await getTranslations("head");
   return {
     title: t("title"),
   };
