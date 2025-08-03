@@ -80,7 +80,7 @@ function PasswordGeneratorComponent({
           data-testid="copy-passphrase-button"
         />
       </div>
-      <div className="flex w-full space-x-4" data-testid="passphrase-actions">
+      <div className="flex w-full gap-4 mt-4" data-testid="passphrase-actions">
         <Button
           color="blue"
           onClick={generateNewPassword}
