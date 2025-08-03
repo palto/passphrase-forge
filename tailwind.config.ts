@@ -8,6 +8,7 @@ const config: Config = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
     ".flowbite-react/class-list.json",
   ],
+  darkMode: "class",
   plugins: [flowbiteReact],
 };
 export default config;
