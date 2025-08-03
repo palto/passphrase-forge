@@ -7,8 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel:env": "vercel env pull .env.development.local",
-    "prettier": "prettier --write ."
+    "typecheck": "tsc --noEmit",
+    "check": "npm run typecheck && npm run lint && npm run prettier:check",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "vercel:env": "vercel env pull .env.development.local"
   },
   "dependencies": {
     "@ai-sdk/openai": "^0.0.39",

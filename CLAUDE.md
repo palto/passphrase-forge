@@ -8,8 +8,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run typecheck` - Check TypeScript types
 - `npm run prettier` - Format code with Prettier
+- `npm run prettier:check` - Check code formatting without modifying files
+- `npm run check` - Run all checks (typecheck, lint, prettier:check)
 - `npm run vercel:env` - Pull environment variables from Vercel
+
+**Important:** Always run `npm run check` after making code changes to ensure TypeScript types are correct, ESLint rules pass, and code formatting is consistent.
 
 ## Architecture Overview
 
@@ -25,7 +30,7 @@ This is a Next.js 14 app that generates secure passphrases with both traditional
 
 **AI Enhancement:**
 
-- `app/passphrase/ai/actions.ts` - Server actions for AI-powered passphrase enhancement using OpenAI's gpt-4o-mini
+- `app/passphrase/ai/actions.ts` - Server actions for AI-powered passphrase enhancement using OpenAI's gpt-4o
 - AI creates grammatically correct Finnish sentences from word components
 - Structured output validation with Zod schemas
 
