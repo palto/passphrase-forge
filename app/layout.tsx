@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeModeScript, Flowbite } from "flowbite-react";
+import { ThemeModeScript } from "flowbite-react";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { AppNavbar } from "@/app/app-navbar";
 import { Analytics } from "@vercel/analytics/react";
+import { ThemeInit } from "@/.flowbite-react/init";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,13 +28,14 @@ export default async function RootLayout({
       <body
         className={`${inter.className} bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300`}
       >
-        <Flowbite>
+        <>
+          <ThemeInit />
           <NextIntlClientProvider messages={messages}>
             <AppNavbar />
             {children}
             <Analytics />
           </NextIntlClientProvider>
-        </Flowbite>
+        </>
       </body>
     </html>
   );

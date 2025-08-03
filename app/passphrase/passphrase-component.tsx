@@ -6,7 +6,13 @@ import {
   GeneratorSettings,
   PasswordGenerator,
 } from "@/app/passphrase/password-generator";
-import { Button, TextInput, Clipboard, HR } from "flowbite-react";
+import {
+  Button,
+  TextInput,
+  ClipboardWithIcon,
+  HR,
+  Spinner,
+} from "flowbite-react";
 import { useTranslations } from "next-intl";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { SettingsButton } from "@/app/passphrase/settings-button";
@@ -67,7 +73,7 @@ function PasswordGeneratorComponent({
           onChange={(e) => setPassphrase(e.target.value)}
           className="w-full"
         />
-        <Clipboard.WithIcon valueToCopy={passphrase} />
+        <ClipboardWithIcon valueToCopy={passphrase} />
       </div>
       <div className="flex w-full space-x-4">
         <Button color="blue" onClick={generateNewPassword}>
@@ -103,13 +109,15 @@ export function AiPasshpraseButton(props: {
   };
 
   return (
-    <Button
-      onClick={callAi}
-      isProcessing={isLoading}
-      outline
-      gradientDuoTone="purpleToPink"
-    >
-      {t("aiGenerate")}
+    <Button onClick={callAi} outline color="purple" disabled={isLoading}>
+      {isLoading ? (
+        <>
+          <Spinner size="sm" className="me-3" />
+          {t("aiGenerate")}
+        </>
+      ) : (
+        t("aiGenerate")
+      )}
     </Button>
   );
 }

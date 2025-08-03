@@ -1,6 +1,12 @@
 "use client";
 
-import { DarkThemeToggle, Dropdown, Navbar } from "flowbite-react";
+import {
+  DarkThemeToggle,
+  Dropdown,
+  DropdownItem,
+  Navbar,
+  NavbarBrand,
+} from "flowbite-react";
 import Link from "next/link";
 import React from "react";
 import { useTranslations } from "next-intl";
@@ -11,7 +17,7 @@ export function AppNavbar() {
   const t = useTranslations("AppNavbar");
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand as={Link} href="/">
+      <NavbarBrand as={Link} href="/">
         <img
           src="/anvil-logo.png"
           className="mr-3 h-6 sm:h-9"
@@ -20,16 +26,16 @@ export function AppNavbar() {
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
           {t("brandTitle")}
         </span>
-      </Navbar.Brand>
+      </NavbarBrand>
       <div className="flex">
         <DarkThemeToggle />
         <Dropdown outline label={<IoLanguage />}>
-          <Dropdown.Item onClick={() => changeLanguage("en")}>
+          <DropdownItem onClick={() => changeLanguage("en")}>
             {t("lang.en")}
-          </Dropdown.Item>
-          <Dropdown.Item onClick={() => changeLanguage("fi")}>
+          </DropdownItem>
+          <DropdownItem onClick={() => changeLanguage("fi")}>
             {t("lang.fi")}
-          </Dropdown.Item>
+          </DropdownItem>
         </Dropdown>
       </div>
     </Navbar>

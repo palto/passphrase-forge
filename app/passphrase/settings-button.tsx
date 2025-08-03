@@ -3,6 +3,8 @@ import {
   RangeSlider,
   TextInput,
   Drawer,
+  DrawerHeader,
+  DrawerItems,
   ToggleSwitch,
 } from "flowbite-react";
 import { useBoolean } from "usehooks-ts";
@@ -30,8 +32,8 @@ export function SettingsButton(props: {
       </div>
       <div>
         <Drawer open={isOpen} onClose={close}>
-          <Drawer.Header title={t("title")} />
-          <Drawer.Items>
+          <DrawerHeader title={t("title")} />
+          <DrawerItems>
             <div className="p-4">
               <Label htmlFor="wordCount">
                 {t("wordCount", { count: generatorSettings.wordCount })}
@@ -99,7 +101,7 @@ export function SettingsButton(props: {
                 label={t("stripUmlauts")}
               />
             </div>
-          </Drawer.Items>
+          </DrawerItems>
         </Drawer>
       </div>
     </>
