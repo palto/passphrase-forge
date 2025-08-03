@@ -25,7 +25,7 @@ export function PassphraseComponent() {
   const generator = usePasswordGenerator();
 
   if (!generator) {
-    return <div>{t("loading")}</div>;
+    return <div data-testid="passphrase-loading">{t("loading")}</div>;
   }
 
   return <PasswordGeneratorComponent generator={generator} />;
@@ -66,18 +66,27 @@ function PasswordGeneratorComponent({
   );
 
   return (
-    <>
-      <div className="relative w-full">
+    <div data-testid="passphrase-generator">
+      <div className="relative w-full" data-testid="passphrase-input-container">
         <TextInput
           id="passphrase"
           value={passphrase}
           onChange={(e) => setPassphrase(e.target.value)}
           className="w-full"
+          data-testid="passphrase-input"
         />
-        <ClipboardWithIcon valueToCopy={passphrase} />
+        <ClipboardWithIcon
+          valueToCopy={passphrase}
+          data-testid="copy-passphrase-button"
+        />
       </div>
-      <div className="flex w-full space-x-4">
-        <Button color="blue" onClick={generateNewPassword} className="h-16">
+      <div className="flex w-full space-x-4" data-testid="passphrase-actions">
+        <Button
+          color="blue"
+          onClick={generateNewPassword}
+          className="h-16"
+          data-testid="generate-passphrase-button"
+        >
           {t("generate")}
         </Button>
         <AiPasshpraseButton
@@ -87,7 +96,7 @@ function PasswordGeneratorComponent({
         <SettingsButton value={generatorSettings} onChange={updateSettings} />
       </div>
       <HR />
-    </>
+    </div>
   );
 }
 
@@ -114,6 +123,7 @@ export function AiPasshpraseButton(props: {
       onClick={callAi}
       disabled={isLoading}
       className="h-16 w-48 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0 disabled:opacity-100 disabled:cursor-wait"
+      data-testid="ai-generate-passphrase-button"
     >
       {isLoading ? (
         <>

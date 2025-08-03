@@ -26,14 +26,18 @@ export function SettingsButton(props: {
         <button
           onClick={open}
           className="flex flex-col rounded-lg w-20 h-[64px] items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700"
+          data-testid="settings-button"
         >
           <FaGear /> {t("open")}
         </button>
       </div>
       <div>
-        <Drawer open={isOpen} onClose={close}>
-          <DrawerHeader title={t("title")} />
-          <DrawerItems>
+        <Drawer open={isOpen} onClose={close} data-testid="settings-drawer">
+          <DrawerHeader
+            title={t("title")}
+            data-testid="settings-drawer-header"
+          />
+          <DrawerItems data-testid="settings-drawer-items">
             <div className="p-4">
               <Label htmlFor="wordCount">
                 {t("wordCount", { count: generatorSettings.wordCount })}
@@ -51,6 +55,7 @@ export function SettingsButton(props: {
                 min={2}
                 max={6}
                 step={1}
+                data-testid="word-count-slider"
               />
             </div>
             <div className="p-4">
@@ -66,6 +71,7 @@ export function SettingsButton(props: {
                   });
                 }}
                 maxLength={1}
+                data-testid="separator-input"
               />
             </div>
             <div className="p-4">
@@ -85,6 +91,7 @@ export function SettingsButton(props: {
                 min={0}
                 max={3}
                 step={1}
+                data-testid="number-count-slider"
               />
             </div>
             <div className="p-4">
@@ -99,6 +106,7 @@ export function SettingsButton(props: {
                   });
                 }}
                 label={t("stripUmlauts")}
+                data-testid="strip-umlauts-toggle"
               />
             </div>
           </DrawerItems>
