@@ -13,6 +13,7 @@ import {
   HR,
   Spinner,
 } from "flowbite-react";
+import { HiSparkles } from "react-icons/hi2";
 import { useTranslations } from "next-intl";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { SettingsButton } from "@/app/passphrase/settings-button";
@@ -120,7 +121,10 @@ export function AiPasshpraseButton(props: {
           {t("aiGenerate")}
         </>
       ) : (
-        t("aiGenerate")
+        <>
+          <HiSparkles className="me-3 w-6 h-6" />
+          {t("aiGenerate")}
+        </>
       )}
     </Button>
   );
