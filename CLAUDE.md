@@ -60,3 +60,9 @@ This is a Next.js 14 app that generates secure passphrases with both traditional
 - Path aliases configured (`@/*` maps to root)
 - ESLint with Next.js and Prettier configurations
 - Environment variables managed through Vercel
+
+### Git Commit Guidelines
+
+- Do not add co-authors in commit messages
+- Do not use emojis in commit messages
+- Keep commit messages clear and descriptive
