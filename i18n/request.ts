@@ -9,7 +9,7 @@ export default getRequestConfig(async () => {
   // Provide a static locale, fetch a user setting,
   // read from `cookies()`, `headers()`, etc.
 
-  const h = headers();
+  const h = await headers();
   const languages = new Negotiator({
     headers: {
       "accept-language": h.get("accept-language") ?? undefined,
@@ -20,7 +20,7 @@ export default getRequestConfig(async () => {
     languages.find((language) => supportedLanguages.includes(language)) ??
     defaultLanguage;
 
-  const cookieLocale = cookies().get("NEXT_LOCALE");
+  const cookieLocale = (await cookies()).get("NEXT_LOCALE");
   if (cookieLocale) {
     locale = cookieLocale.value;
   }
