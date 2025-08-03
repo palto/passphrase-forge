@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2025.1.0] - 2025-08-03
+
+### Changed
+
+- Upgraded to Next.js 15.4.5 from Next.js 14 for improved performance and new features
+- Upgraded to React 19.1.1 from React 18 for latest React improvements
+- Upgraded Flowbite React from 0.10.2 to 0.12.5 with dark mode fixes
+- Upgraded next-intl to latest version with new configuration format
+- Enabled Turbopack for faster development builds
+- Updated to use async request APIs (headers() and cookies() now require await)
+- Switched AI model from GPT-4 to GPT-4o for better passphrase generation
+
+### Added
+
+- Node.js 22+ requirement for Flowbite React CLI compatibility
+- Comprehensive test IDs for improved testing capabilities
+- CLAUDE.md file for AI assistant guidance
+
+### Fixed
+
+- Dark mode functionality with proper Tailwind configuration
+- AI button styling with gradient background and loading states
+- Button spacing issues in passphrase component
+- Duplicate separator between passphrase component and app details
+- ESLint warnings for performance and React hooks
+
 ## [2024.2.0] - 2024-07-12
 
 ### Added
