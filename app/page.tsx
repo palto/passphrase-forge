@@ -9,7 +9,7 @@ export default async function Home() {
   const t = await getTranslations("Home");
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
-      <div className="dark:bg-gray-300 rounded-2xl shadow dark:shadow-gray-300">
+      <div className="dark:bg-gray-300 rounded-2xl shadow-sm dark:shadow-gray-300">
         <Image
           src="/aitio-labdays2018.png"
           alt="Labdays logo"
