@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2025.2.0] - 2025-08-04
+
+### Changed
+
+- Upgraded to Tailwind CSS v4.1.11 from v3.4.17
+- Updated Node.js requirement to 22.x
+
 ## [2025.1.0] - 2025-08-03
 
 ### Changed
