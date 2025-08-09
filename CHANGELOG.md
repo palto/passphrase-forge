@@ -11,6 +11,10 @@ All notable changes to this project will be documented in this file.
 - More consistent capitalization in generated sentences
 - Enhanced grammatical correctness in Finnish AI passphrases
 
+### Changed
+
+- Both regular and AI generation now provide 5 passphrases to choose from instead of single options
+
 ## [2025.2.0] - 2025-08-04
 
 ### Changed
