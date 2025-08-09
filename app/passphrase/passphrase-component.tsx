@@ -18,14 +18,77 @@ import { useLocalStorage } from "usehooks-ts";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 export function PassphraseComponent() {
-  const t = useTranslations("PassphraseComponent");
   const generator = usePasswordGenerator();
 
   if (!generator) {
-    return <div data-testid="passphrase-loading">{t("loading")}</div>;
+    return <PassphraseLoadingComponent />;
   }
 
   return <PasswordGeneratorComponent generator={generator} />;
+}
+
+function PassphraseLoadingComponent() {
+  const t = useTranslations("PassphraseComponent");
+
+  return (
+    <div data-testid="passphrase-loading">
+      <div data-testid="passphrases-container">
+        <h3 className="text-lg font-medium mb-4">{t("options")}</h3>
+        <div className="grid gap-3">
+          {Array.from({ length: PASSPHRASE_COUNT }, (_, index) => (
+            <div
+              key={index}
+              className="relative w-full"
+              data-testid={`passphrase-item-${index}`}
+            >
+              <TextInput
+                value=""
+                placeholder={t("loading")}
+                readOnly
+                className="w-full animate-pulse"
+                data-testid={`passphrase-input-${index}`}
+                disabled
+              />
+              <ClipboardWithIcon
+                valueToCopy=""
+                data-testid={`copy-passphrase-button-${index}`}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="flex w-full gap-4 mt-4" data-testid="passphrase-actions">
+        <Button
+          color="blue"
+          className="h-16"
+          data-testid="generate-passphrase-button"
+          disabled
+        >
+          <Spinner size="sm" className="me-2" />
+          {t("loading")}
+        </Button>
+        <Button
+          className="h-16 w-48 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0 disabled:opacity-50 disabled:cursor-wait"
+          data-testid="ai-generate-passphrase-button"
+          disabled
+        >
+          <Spinner size="sm" className="me-2" />
+          {t("loading")}
+        </Button>
+        <div className="flex items-center justify-center">
+          <button
+            className="flex flex-col rounded-lg w-20 h-[64px] items-center justify-center bg-gray-200 dark:bg-gray-700 cursor-not-allowed opacity-50"
+            data-testid="settings-button"
+            disabled
+          >
+            <Spinner size="sm" />
+            <span className="text-xs mt-1">{t("loading")}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function usePasswordGenerator() {
