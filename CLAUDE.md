@@ -144,7 +144,7 @@ This project uses **Vitest** as the primary testing framework with the following
 **AI Quality Tests** (`__tests__/ai-quality/`):
 
 - Simple testing framework for AI-generated passphrase quality
-- **Environment-gated**: Automatically enabled when API key is present  
+- **Environment-gated**: Automatically enabled when API key is present
 - **Single test approach**: Tests one input with 5 parallel generations
 - **Clear pass/fail**: Simple PASS/FAIL for digit preservation, capitalization, length
 
@@ -153,7 +153,7 @@ This project uses **Vitest** as the primary testing framework with the following
 ```
 app/passphrase/__tests__/ai-quality/
 ├── ai-enhancement.test.ts    # Single test with 5 parallel AI generations
-├── config.ts                 # Environment validation  
+├── config.ts                 # Environment validation
 └── README.md                # Simple usage documentation
 ```
 
