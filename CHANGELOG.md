@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2025.3.0] - 2025-08-09
+
+### Improved
+
+- Significantly improved AI-generated passphrase quality and reliability
+- Better handling of numbers in AI-enhanced passphrases
+- More consistent capitalization in generated sentences
+- Enhanced grammatical correctness in Finnish AI passphrases
+
 ## [2025.2.0] - 2025-08-04
 
 ### Changed
