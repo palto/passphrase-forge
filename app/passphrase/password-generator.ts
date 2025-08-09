@@ -61,6 +61,15 @@ export class PasswordGenerator {
     };
   }
 
+  generateMultiple(
+    count: number,
+    generationSettings?: Partial<GeneratorSettings>,
+  ): PassphraseDetails[] {
+    return Array.from({ length: count }, () =>
+      this.generateDetails(generationSettings),
+    );
+  }
+
   static stipUmlauts(text: string) {
     return text
       .replace(/ä/g, "a")

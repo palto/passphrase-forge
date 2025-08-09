@@ -17,9 +17,10 @@
     }
   },
   "PassphraseComponent": {
-    "generate": "Tao uusi salasana",
-    "aiGenerate": "Tekoälytao uusi salasana",
+    "generate": "Tao salasanoja",
+    "aiGenerate": "Tekoälytao salasanoja",
     "loading": "Ladataan sanoja...",
+    "options": "Valitse suosikkisi:",
     "settings": {
       "open": "Asetukset",
       "title": "Salasanasepän asetukset",

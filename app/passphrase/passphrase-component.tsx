@@ -9,7 +9,10 @@ import {
 import { Button, TextInput, ClipboardWithIcon, Spinner } from "flowbite-react";
 import { HiSparkles } from "react-icons/hi2";
 import { useTranslations } from "next-intl";
-import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import { PassphraseDetails } from "@/app/passphrase/password-generator";
+
+const PASSPHRASE_COUNT = 5;
 import { SettingsButton } from "@/app/passphrase/settings-button";
 import { useLocalStorage } from "usehooks-ts";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
@@ -44,47 +47,68 @@ function PasswordGeneratorComponent({
     "generatorSettings",
     defaultGeneratorSettings,
   );
-  const [passphrase, setPassphrase] = useState<string>(
-    generator.generate(generatorSettings),
+  const [passphrases, setPassphrases] = useState<PassphraseDetails[]>(
+    generator.generateMultiple(PASSPHRASE_COUNT, generatorSettings),
   );
-  const generateNewPassword = useCallback(() => {
-    setPassphrase(generator.generate(generatorSettings));
+
+  const generateRegularPasswords = useCallback(() => {
+    const newPassphrases = generator.generateMultiple(PASSPHRASE_COUNT, generatorSettings);
+    setPassphrases(newPassphrases);
   }, [generator, generatorSettings]);
+
+  const generateAiPasswords = useCallback(
+    async (aiPassphrases: PassphraseDetails[]) => {
+      setPassphrases(aiPassphrases);
+    },
+    [],
+  );
 
   const updateSettings = useCallback(
     (settings: GeneratorSettings) => {
       setGeneratorSettings(settings);
-      setPassphrase(generator.generate(settings));
+      const newPassphrases = generator.generateMultiple(PASSPHRASE_COUNT, settings);
+      setPassphrases(newPassphrases);
     },
     [generator, setGeneratorSettings],
   );
 
   return (
     <div data-testid="passphrase-generator">
-      <div className="relative w-full" data-testid="passphrase-input-container">
-        <TextInput
-          id="passphrase"
-          value={passphrase}
-          onChange={(e) => setPassphrase(e.target.value)}
-          className="w-full"
-          data-testid="passphrase-input"
-        />
-        <ClipboardWithIcon
-          valueToCopy={passphrase}
-          data-testid="copy-passphrase-button"
-        />
+      <div data-testid="passphrases-container">
+        <h3 className="text-lg font-medium mb-4">{t("options")}</h3>
+        <div className="grid gap-3">
+          {passphrases.map((details, index) => (
+            <div
+              key={index}
+              className="relative w-full"
+              data-testid={`passphrase-item-${index}`}
+            >
+              <TextInput
+                value={details.passphrase}
+                readOnly
+                className="w-full"
+                data-testid={`passphrase-input-${index}`}
+              />
+              <ClipboardWithIcon
+                valueToCopy={details.passphrase}
+                data-testid={`copy-passphrase-button-${index}`}
+              />
+            </div>
+          ))}
+        </div>
       </div>
+
       <div className="flex w-full gap-4 mt-4" data-testid="passphrase-actions">
         <Button
           color="blue"
-          onClick={generateNewPassword}
+          onClick={generateRegularPasswords}
           className="h-16"
           data-testid="generate-passphrase-button"
         >
           {t("generate")}
         </Button>
-        <AiPasshpraseButton
-          onPassphrase={setPassphrase}
+        <AiPassphraseButton
+          onMultiplePassphrases={generateAiPasswords}
           generatorSettings={generatorSettings}
         />
         <SettingsButton value={generatorSettings} onChange={updateSettings} />
@@ -93,8 +117,8 @@ function PasswordGeneratorComponent({
   );
 }
 
-export function AiPasshpraseButton(props: {
-  readonly onPassphrase: (passphrase: string) => void;
+export function AiPassphraseButton(props: {
+  readonly onMultiplePassphrases: (passphrases: PassphraseDetails[]) => void;
   readonly generatorSettings?: Partial<GeneratorSettings>;
 }) {
   const t = useTranslations("PassphraseComponent");
@@ -102,10 +126,11 @@ export function AiPasshpraseButton(props: {
   const callAi = async () => {
     setIsLoading(true);
     try {
-      const passphraseDetails = await aiPassphraseEnhancement(
+      const passphraseDetails = await aiMultiplePassphraseEnhancement(
         props.generatorSettings,
+        PASSPHRASE_COUNT,
       );
-      props.onPassphrase(passphraseDetails.passphrase);
+      props.onMultiplePassphrases(passphraseDetails);
     } finally {
       setIsLoading(false);
     }

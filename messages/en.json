@@ -17,9 +17,10 @@
     }
   },
   "PassphraseComponent": {
-    "generate": "Forge new passphrase",
-    "aiGenerate": "Forge new passphrase with AI",
+    "generate": "Forge passphrases",
+    "aiGenerate": "Forge passphrases with AI",
     "loading": "Loading words...",
+    "options": "Choose your favorite:",
     "settings": {
       "open": "Settings",
       "title": "Passphrase Forge settings",

@@ -30,6 +30,43 @@ export async function aiPassphraseEnhancement(
   return { ...aiDetails, passphrase };
 }
 
+const DEFAULT_PASSPHRASE_COUNT = 5;
+
+export async function aiMultiplePassphraseEnhancement(
+  generatorSettings?: Partial<GeneratorSettings>,
+  count: number = DEFAULT_PASSPHRASE_COUNT,
+): Promise<PassphraseDetails[]> {
+  const passwordGenerator = await getPasswordGenerator();
+  const settings = {
+    ...defaultGeneratorSettings,
+    ...generatorSettings,
+  };
+
+  // Generate multiple base passphrases in parallel
+  const baseDetailsPromises = Array.from({ length: count }, () =>
+    passwordGenerator.generateDetails(generatorSettings),
+  );
+  const baseDetailsArray = await Promise.all(baseDetailsPromises);
+
+  // Enhance all passphrases in parallel
+  const enhancedDetailsPromises = baseDetailsArray.map(async (details) => {
+    try {
+      const aiDetails = await aiEnhance(details);
+      const passphrase = settings.stripUmlauts
+        ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+        : aiDetails.passphrase;
+      return { ...aiDetails, passphrase };
+    } catch (error) {
+      // If AI enhancement fails, return the original passphrase
+      console.warn("AI enhancement failed for one passphrase:", error);
+      return details;
+    }
+  });
+
+  const results = await Promise.all(enhancedDetailsPromises);
+  return results;
+}
+
 export async function aiEnhance(
   details: PassphraseDetails,
 ): Promise<PassphraseDetails> {
