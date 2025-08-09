@@ -59,6 +59,8 @@ npm run dev
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
 - `npm run prettier` - Format code with Prettier
+- `npm run test` - Run unit tests
+- `npm run test:ai` - Run AI quality tests (requires OpenAI API key)
 - `npm run vercel:env` - Pull environment variables from Vercel
 
 ## Tech Stack
