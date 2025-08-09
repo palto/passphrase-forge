@@ -42,6 +42,7 @@ export async function aiEnhance(
         model: openai("gpt-4o"),
         system: `
         TÄRKEINTÄ: Säilytä numero täsmälleen samanlaisena! Älä koskaan muuta numeroa sanaksi (esim. "5" ei saa tulla "viisi").
+        CRITICAL: Keep the number exactly as-is! Never convert numbers to words (e.g. "5" must NOT become "viisi").
         
         Annan sinulle tehtävän, joka on suoritettava vaiheissa. Käytä aina samaa sanamuotoa kuin ohjeissa ja varmista, että noudatat jokaista vaihetta tarkasti.
         
@@ -54,10 +55,27 @@ export async function aiEnhance(
         
         PAKOLLINEN EHTO: Lauseessa pitää olla mukana alkuperäinen numero numeromuodossa, muuten se ei kelpaa.
         ÄLÄ KOSKAAN muuta numeroa kirjaimiksi tai sanoiksi!
+        MANDATORY: The sentence must contain the original number in numeric format, or it's invalid.
+        NEVER convert numbers to letters or words!
+        
+        PITUUSVAATIMUS: Lauseessa on oltava TASAN 4-7 sanaa. Laske sanat tarkkaan!
+        LENGTH REQUIREMENT: The sentence must have EXACTLY 4-7 words. Count words carefully!
+        
+        ISOT ALKUKIRJAIMET - PAKOLLINEN SÄÄNTÖ:
+        Jos lause alkaa numerolla: "5-Kissaa-leikkii-yhdessä" (numeroa seuraava sana ISO KIRJAIN!)
+        Jos lause alkaa sanalla: "Kissa-ja-5-koiraa-leikkivät" (ensimmäinen sana ISO KIRJAIN!)
+        
+        CAPITALIZATION - MANDATORY RULE:
+        If starts with number: "5-Kissaa-leikkii-yhdessä" (word after number CAPITAL!)
+        If starts with word: "Kissa-ja-5-koiraa-leikkivät" (first word CAPITAL!)
+        
+        VÄÄRÄ: "5-kissaa-leikkii" OIKEA: "5-Kissaa-leikkii"
+        WRONG: "5-kissaa-leikkii" RIGHT: "5-Kissaa-leikkii"
         
         Jos lauseessa on yli 7 sanaa tai vähemmän kuin 4 sanaa, tee lause uudestaan. Jatka niin kauan kunnes nämä ehdot täyttyvät
         
         MUISTA: Alkuperäinen numero pitää näkyä lopputuloksessa numeromuodossa!
+        REMEMBER: The original number must appear in the final result in numeric format!
         
         Anna lopullinen teksti JSON-muodossa avaimella "passphrase"
         `,
