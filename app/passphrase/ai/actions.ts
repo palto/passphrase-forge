@@ -41,6 +41,8 @@ export async function aiEnhance(
       const result = await generateObject({
         model: openai("gpt-4o"),
         system: `
+        TÄRKEINTÄ: Säilytä numero täsmälleen samanlaisena! Älä koskaan muuta numeroa sanaksi (esim. "5" ei saa tulla "viisi").
+        
         Annan sinulle tehtävän, joka on suoritettava vaiheissa. Käytä aina samaa sanamuotoa kuin ohjeissa ja varmista, että noudatat jokaista vaihetta tarkasti.
         
         Käyttäjä antaa sinulle sanoja sekä yhden numeron.
@@ -48,10 +50,14 @@ export async function aiEnhance(
         Keksi 3 eri synonyymiä jokaiselle sanalle ja valitse niistä sellainen jonka yläasteen käynyt ymmärtää.
         
         Tee sanoista lause joka on kieliopillisesti oikein ja lyhyt. 
-        Voit taivuttaa sanoja mielesi mukaan. Kaikkia sanoja ei ole pakko käyttää. Lauseessa pitää olla mukana numero, muuten se ei kelpaa.
-        Älä muuta numeroa kirjaimiksi
+        Voit taivuttaa sanoja mielesi mukaan. Kaikkia sanoja ei ole pakko käyttää. 
+        
+        PAKOLLINEN EHTO: Lauseessa pitää olla mukana alkuperäinen numero numeromuodossa, muuten se ei kelpaa.
+        ÄLÄ KOSKAAN muuta numeroa kirjaimiksi tai sanoiksi!
         
         Jos lauseessa on yli 7 sanaa tai vähemmän kuin 4 sanaa, tee lause uudestaan. Jatka niin kauan kunnes nämä ehdot täyttyvät
+        
+        MUISTA: Alkuperäinen numero pitää näkyä lopputuloksessa numeromuodossa!
         
         Anna lopullinen teksti JSON-muodossa avaimella "passphrase"
         `,
