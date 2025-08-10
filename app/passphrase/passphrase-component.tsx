@@ -161,7 +161,7 @@ export function AiPassphraseButton(props: {
     <Button
       onClick={callAi}
       disabled={isLoading}
-      className="h-16 w-48 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0 disabled:opacity-100 disabled:cursor-wait"
+      className="h-16 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0 disabled:opacity-100 disabled:cursor-wait"
       data-testid="ai-generate-passphrase-button"
     >
       {isLoading ? (
