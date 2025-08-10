@@ -136,7 +136,7 @@ function PasswordGeneratorComponent({
   );
 
   return (
-    <div data-testid="passphrase-generator">
+    <div data-testid="passphrase-generator" className="w-full">
       <div data-testid="passphrases-container">
         <h3 className="text-lg font-medium mb-4">{t("options")}</h3>
         <div className="grid gap-3">
