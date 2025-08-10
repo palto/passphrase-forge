@@ -58,7 +58,7 @@ function PassphraseLoadingComponent() {
         </div>
       </div>
 
-      <div className="flex w-full gap-4 mt-4" data-testid="passphrase-actions">
+      <div className="flex flex-col sm:flex-row w-full gap-2 sm:gap-4 mt-4" data-testid="passphrase-actions">
         <Button
           color="blue"
           className="h-16"
@@ -161,7 +161,7 @@ function PasswordGeneratorComponent({
         </div>
       </div>
 
-      <div className="flex w-full gap-4 mt-4" data-testid="passphrase-actions">
+      <div className="flex flex-col sm:flex-row w-full gap-2 sm:gap-4 mt-4" data-testid="passphrase-actions">
         <Button
           color="blue"
           onClick={generateRegularPasswords}
