@@ -120,6 +120,10 @@ function PasswordGeneratorComponent({
         className="flex flex-col sm:flex-row w-full gap-2 sm:gap-4 mt-4"
         data-testid="passphrase-actions"
       >
+        <AiPassphraseButton
+          onMultiplePassphrases={generateAiPasswords}
+          generatorSettings={generatorSettings}
+        />
         <Button
           color="blue"
           onClick={generateRegularPasswords}
@@ -128,10 +132,6 @@ function PasswordGeneratorComponent({
         >
           {t("generate")}
         </Button>
-        <AiPassphraseButton
-          onMultiplePassphrases={generateAiPasswords}
-          generatorSettings={generatorSettings}
-        />
         <SettingsButton value={generatorSettings} onChange={updateSettings} />
       </div>
     </div>
