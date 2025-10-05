@@ -1,4 +1,9 @@
-import { PasswordGenerator } from "@/app/passphrase/password-generator";
+import {
+  PasswordGenerator,
+  PassphraseDetails,
+  defaultGeneratorSettings,
+  GeneratorSettings,
+} from "@/app/passphrase/password-generator";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 let passwordGenerator: Promise<PasswordGenerator> | undefined;
@@ -12,4 +17,13 @@ export async function getPasswordGenerator() {
     });
   }
   return passwordGenerator;
+}
+
+export async function generateInitialPassphrases(
+  count: number = 5,
+  settings?: Partial<GeneratorSettings>,
+): Promise<PassphraseDetails[]> {
+  const generator = await getPasswordGenerator();
+  const mergedSettings = { ...defaultGeneratorSettings, ...settings };
+  return generator.generateMultiple(count, mergedSettings);
 }

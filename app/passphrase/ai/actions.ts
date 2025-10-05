@@ -18,7 +18,7 @@ export async function aiPassphraseEnhancement(
   generatorSettings?: Partial<GeneratorSettings>,
 ): Promise<PassphraseDetails> {
   const passwordGenerator = await getPasswordGenerator();
-  const details = passwordGenerator.generateDetails(generatorSettings);
+  const details = await passwordGenerator.generateDetails(generatorSettings);
   const aiDetails = await aiEnhance(details);
   const settings = {
     ...defaultGeneratorSettings,
@@ -43,10 +43,10 @@ export async function aiMultiplePassphraseEnhancement(
   };
 
   // Generate multiple base passphrases in parallel
-  const baseDetailsPromises = Array.from({ length: count }, () =>
-    passwordGenerator.generateDetails(generatorSettings),
+  const baseDetailsArray = await passwordGenerator.generateMultiple(
+    count,
+    generatorSettings,
   );
-  const baseDetailsArray = await Promise.all(baseDetailsPromises);
 
   // Enhance all passphrases in parallel
   const enhancedDetailsPromises = baseDetailsArray.map(async (details) => {
@@ -63,8 +63,7 @@ export async function aiMultiplePassphraseEnhancement(
     }
   });
 
-  const results = await Promise.all(enhancedDetailsPromises);
-  return results;
+  return await Promise.all(enhancedDetailsPromises);
 }
 
 export async function aiEnhance(

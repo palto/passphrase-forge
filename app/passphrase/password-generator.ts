@@ -1,3 +1,5 @@
+import { WordSource, ArrayWordSource } from "@/app/passphrase/word-source";
+
 export type GeneratorSettings = {
   readonly wordCount: number;
   readonly separator: string;
@@ -19,29 +21,34 @@ export const defaultGeneratorSettings: GeneratorSettings = {
 };
 
 export class PasswordGenerator {
-  private readonly totalWords;
   private readonly defaultSettings: GeneratorSettings =
     defaultGeneratorSettings;
-  constructor(private readonly passwordList: string[]) {
-    this.totalWords = passwordList.length;
+
+  constructor(private readonly wordSource: WordSource) {}
+
+  async getRandomWord(): Promise<string> {
+    const totalWords = await this.wordSource.getWordCount();
+    const randomId = Math.floor(Math.random() * totalWords);
+    return this.wordSource.getWord(randomId);
   }
 
-  getRandomWord() {
-    return this.passwordList[Math.floor(Math.random() * this.totalWords)];
-  }
-
-  generate(generationSettings?: Partial<GeneratorSettings>) {
-    return this.generateDetails(generationSettings).passphrase;
-  }
-
-  generateDetails(
+  async generate(
     generationSettings?: Partial<GeneratorSettings>,
-  ): PassphraseDetails {
+  ): Promise<string> {
+    const details = await this.generateDetails(generationSettings);
+    return details.passphrase;
+  }
+
+  async generateDetails(
+    generationSettings?: Partial<GeneratorSettings>,
+  ): Promise<PassphraseDetails> {
     const { wordCount, numberCount, stripUmlauts, separator } = {
       ...this.defaultSettings,
       ...generationSettings,
     };
-    const parts = Array.from({ length: wordCount }, () => this.getRandomWord());
+    const parts = await Promise.all(
+      Array.from({ length: wordCount }, () => this.getRandomWord()),
+    );
     if (numberCount > 0) {
       const numbers = Array.from(
         { length: numberCount },
@@ -61,12 +68,14 @@ export class PasswordGenerator {
     };
   }
 
-  generateMultiple(
+  async generateMultiple(
     count: number,
     generationSettings?: Partial<GeneratorSettings>,
-  ): PassphraseDetails[] {
-    return Array.from({ length: count }, () =>
-      this.generateDetails(generationSettings),
+  ): Promise<PassphraseDetails[]> {
+    return Promise.all(
+      Array.from({ length: count }, () =>
+        this.generateDetails(generationSettings),
+      ),
     );
   }
 
@@ -80,6 +89,7 @@ export class PasswordGenerator {
 
   static fromText(text: string) {
     const wordList = text.split("\n").map((password) => password.trim());
-    return new PasswordGenerator(wordList);
+    const wordSource = new ArrayWordSource(wordList);
+    return new PasswordGenerator(wordSource);
   }
 }

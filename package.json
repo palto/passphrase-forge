@@ -27,6 +27,7 @@
     "@vercel/analytics": "^1.5.0",
     "ai": "^5.0.60",
     "flowbite-react": "^0.12.9",
+    "idb": "^8.0.3",
     "negotiator": "^1.0.0",
     "next": "15.5.4",
     "next-intl": "^4.3.9",

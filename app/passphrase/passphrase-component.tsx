@@ -1,71 +1,37 @@
 "use client";
-import useSWR from "swr";
 import React, { useCallback, useState } from "react";
 import {
   defaultGeneratorSettings,
   GeneratorSettings,
-  PasswordGenerator,
 } from "@/app/passphrase/password-generator";
 import { Button, TextInput, ClipboardWithIcon, Spinner } from "flowbite-react";
 import { HiSparkles } from "react-icons/hi2";
 import { useTranslations } from "next-intl";
 import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
-
-const PASSPHRASE_COUNT = 5;
 import { SettingsButton } from "@/app/passphrase/settings-button";
 import { useLocalStorage } from "usehooks-ts";
-const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
+import { usePasswordGenerator } from "@/app/passphrase/usePasswordGenerator";
 
-export function PassphraseComponent() {
-  const generator = usePasswordGenerator();
+const PASSPHRASE_COUNT = 5;
 
-  if (!generator) {
-    return <PassphraseLoadingComponent />;
-  }
-
-  return <PasswordGeneratorComponent generator={generator} />;
-}
-
-function PassphraseLoadingComponent() {
-  const t = useTranslations("PassphraseComponent");
-
-  return (
-    <div
-      data-testid="passphrase-loading"
-      className="flex flex-col items-center justify-center py-8 space-y-4"
-    >
-      <Spinner size="xl" />
-      <p className="text-lg text-gray-600 dark:text-gray-400">{t("loading")}</p>
-    </div>
-  );
-}
-
-function usePasswordGenerator() {
-  const { data: generator } = useSWR(wordListUrl, async () => {
-    const response = await fetch(wordListUrl);
-    const text = await response.text();
-    return PasswordGenerator.fromText(text);
-  });
-  return generator;
-}
-
-function PasswordGeneratorComponent({
-  generator,
+export function PassphraseComponent({
+  initialPassphrases,
 }: {
-  readonly generator: PasswordGenerator;
+  readonly initialPassphrases: PassphraseDetails[];
 }) {
   const t = useTranslations("PassphraseComponent");
   const [generatorSettings, setGeneratorSettings] = useLocalStorage(
     "generatorSettings",
     defaultGeneratorSettings,
   );
-  const [passphrases, setPassphrases] = useState<PassphraseDetails[]>(
-    generator.generateMultiple(PASSPHRASE_COUNT, generatorSettings),
-  );
+  const [passphrases, setPassphrases] =
+    useState<PassphraseDetails[]>(initialPassphrases);
+  const generator = usePasswordGenerator();
 
-  const generateRegularPasswords = useCallback(() => {
-    const newPassphrases = generator.generateMultiple(
+  const generateRegularPasswords = useCallback(async () => {
+    if (!generator) return;
+    const newPassphrases = await generator.generateMultiple(
       PASSPHRASE_COUNT,
       generatorSettings,
     );
@@ -80,9 +46,10 @@ function PasswordGeneratorComponent({
   );
 
   const updateSettings = useCallback(
-    (settings: GeneratorSettings) => {
+    async (settings: GeneratorSettings) => {
       setGeneratorSettings(settings);
-      const newPassphrases = generator.generateMultiple(
+      if (!generator) return;
+      const newPassphrases = await generator.generateMultiple(
         PASSPHRASE_COUNT,
         settings,
       );
@@ -138,7 +105,7 @@ function PasswordGeneratorComponent({
   );
 }
 
-export function AiPassphraseButton(props: {
+function AiPassphraseButton(props: {
   readonly onMultiplePassphrases: (passphrases: PassphraseDetails[]) => void;
   readonly generatorSettings?: Partial<GeneratorSettings>;
 }) {
