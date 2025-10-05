@@ -5,10 +5,20 @@ const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
 });
 
-const eslintConfig = [{
-  ignores: ["node_modules/**", ".next/**", "out/**", "build/**", "next-env.d.ts", ".flowbite-react/init.tsx"]
-}, ...compat.config({
-  extends: ["next/core-web-vitals", "prettier"],
-})];
+const eslintConfig = [
+  {
+    ignores: [
+      "node_modules/**",
+      ".next/**",
+      "out/**",
+      "build/**",
+      "next-env.d.ts",
+      ".flowbite-react/init.tsx",
+    ],
+  },
+  ...compat.config({
+    extends: ["next/core-web-vitals", "next/typescript", "prettier"],
+  }),
+];
 
 export default eslintConfig;

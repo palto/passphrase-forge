@@ -13,6 +13,7 @@ vi.mock("@/app/passphrase/ai/actions", () => ({
 
 import { getPasswordGenerator } from "@/app/passphrase/server";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import type { PasswordGenerator } from "@/app/passphrase/password-generator";
 
 describe("GET /api/salasana", () => {
   const mockTraditionalPassword = "Kissa-Koira-Auto-5";
@@ -22,9 +23,12 @@ describe("GET /api/salasana", () => {
     vi.clearAllMocks();
 
     // Mock traditional password generator
-    vi.mocked(getPasswordGenerator).mockResolvedValue({
+    const mockGenerator: Pick<PasswordGenerator, "generate"> = {
       generate: vi.fn().mockReturnValue(mockTraditionalPassword),
-    } as any);
+    };
+    vi.mocked(getPasswordGenerator).mockResolvedValue(
+      mockGenerator as PasswordGenerator,
+    );
 
     // Mock AI enhancement
     vi.mocked(aiPassphraseEnhancement).mockResolvedValue({
