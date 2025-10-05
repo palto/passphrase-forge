@@ -22,10 +22,10 @@
     "vercel:env": "vercel env pull .env.development.local"
   },
   "dependencies": {
-    "@ai-sdk/openai": "^2.0.0",
+    "@ai-sdk/openai": "^2.0.42",
     "@next/bundle-analyzer": "15.4.5",
     "@vercel/analytics": "^1.5.0",
-    "ai": "^5.0.0",
+    "ai": "^5.0.60",
     "flowbite-react": "^0.12.5",
     "negotiator": "^1.0.0",
     "next": "15.4.5",
@@ -36,7 +36,7 @@
     "react-icons": "^5.5.0",
     "swr": "^2.3.4",
     "usehooks-ts": "^3.1.1",
-    "zod": "^4.0.14"
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -51,8 +51,8 @@
     "@vitejs/plugin-react": "^5.0.0",
     "@vitest/ui": "^3.2.4",
     "dotenv": "^17.2.1",
-    "eslint": "^9.32.0",
-    "eslint-config-next": "15.4.5",
+    "eslint": "^9.37.0",
+    "eslint-config-next": "15.5.4",
     "eslint-config-prettier": "^10.1.8",
     "jsdom": "^26.1.0",
     "postcss": "^8",
