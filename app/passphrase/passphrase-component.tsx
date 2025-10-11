@@ -27,7 +27,7 @@ export function PassphraseComponent({
   );
   const [passphrases, setPassphrases] =
     useState<PassphraseDetails[]>(initialPassphrases);
-  const generator = usePasswordGenerator();
+  const { generator, isLoading, error } = usePasswordGenerator();
 
   const generateRegularPasswords = useCallback(async () => {
     if (!generator) return;
@@ -96,11 +96,33 @@ export function PassphraseComponent({
           onClick={generateRegularPasswords}
           className="h-16"
           data-testid="generate-passphrase-button"
+          disabled={isLoading || !!error}
         >
-          {t("generate")}
+          {isLoading ? (
+            <>
+              <Spinner size="sm" className="mr-2" />
+              {t("loading")}
+            </>
+          ) : (
+            t("generate")
+          )}
         </Button>
-        <SettingsButton value={generatorSettings} onChange={updateSettings} />
+        <SettingsButton
+          value={generatorSettings}
+          onChange={updateSettings}
+          disabled={isLoading || !!error}
+        />
       </div>
+      {error && (
+        <div
+          data-testid="passphrase-error"
+          className="mt-4 p-4 rounded-lg bg-red-50 dark:bg-red-900/20"
+        >
+          <p className="text-sm text-red-600 dark:text-red-400">
+            {t("error")}: {error.message}
+          </p>
+        </div>
+      )}
     </div>
   );
 }
@@ -108,6 +130,7 @@ export function PassphraseComponent({
 function AiPassphraseButton(props: {
   readonly onMultiplePassphrases: (passphrases: PassphraseDetails[]) => void;
   readonly generatorSettings?: Partial<GeneratorSettings>;
+  readonly disabled?: boolean;
 }) {
   const t = useTranslations("PassphraseComponent");
   const [isLoading, setIsLoading] = useState(false);
@@ -127,7 +150,7 @@ function AiPassphraseButton(props: {
   return (
     <Button
       onClick={callAi}
-      disabled={isLoading}
+      disabled={isLoading || props.disabled}
       className="h-16 bg-linear-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-medium border-0 disabled:opacity-100 disabled:cursor-wait"
       data-testid="ai-generate-passphrase-button"
     >

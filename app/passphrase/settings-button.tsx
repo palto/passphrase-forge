@@ -15,6 +15,7 @@ import { GeneratorSettings } from "@/app/passphrase/password-generator";
 export function SettingsButton(props: {
   readonly value: GeneratorSettings;
   readonly onChange: (settings: GeneratorSettings) => void;
+  readonly disabled?: boolean;
 }) {
   const generatorSettings = props.value;
   const setGeneratorSettings = props.onChange;
@@ -25,7 +26,8 @@ export function SettingsButton(props: {
       <div className="flex items-center justify-center">
         <button
           onClick={open}
-          className="flex flex-col rounded-lg w-20 h-[64px] items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700"
+          disabled={props.disabled}
+          className="flex flex-col rounded-lg w-20 h-[64px] items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-transparent dark:disabled:hover:bg-transparent"
           data-testid="settings-button"
         >
           <FaGear /> {t("open")}

@@ -28,32 +28,60 @@ async function initializeWordlist() {
         }
         worker.terminate();
       };
+
+      worker.onerror = (error) => {
+        reject(new Error(`Worker error: ${error.message}`));
+        worker.terminate();
+      };
     });
   }
 }
 
-export function usePasswordGenerator() {
-  const [generator, setGenerator] = useState<PasswordGenerator | null>(null);
+export interface PasswordGeneratorState {
+  generator: PasswordGenerator | null;
+  isLoading: boolean;
+  error: Error | null;
+}
+
+export function usePasswordGenerator(): PasswordGeneratorState {
+  const [state, setState] = useState<PasswordGeneratorState>({
+    generator: null,
+    isLoading: true,
+    error: null,
+  });
 
   useEffect(() => {
     const initializeIndexedDB = async () => {
-      // Ensure initialization only happens once, even in React Strict Mode
-      if (!didInit) {
-        didInit = true;
-        initPromise = initializeWordlist();
+      try {
+        // Ensure initialization only happens once, even in React Strict Mode
+        if (!didInit) {
+          didInit = true;
+          initPromise = initializeWordlist();
+        }
+
+        // Wait for initialization to complete (handles concurrent calls)
+        await initPromise;
+
+        // Create generator with IndexedDB word source
+        const wordSource = new IndexedDBWordSource();
+        const gen = new PasswordGenerator(wordSource);
+
+        setState({
+          generator: gen,
+          isLoading: false,
+          error: null,
+        });
+      } catch (error) {
+        setState({
+          generator: null,
+          isLoading: false,
+          error: error instanceof Error ? error : new Error("Unknown error"),
+        });
       }
-
-      // Wait for initialization to complete (handles concurrent calls)
-      await initPromise;
-
-      // Create generator with IndexedDB word source
-      const wordSource = new IndexedDBWordSource();
-      const gen = new PasswordGenerator(wordSource);
-      setGenerator(gen);
     };
 
-    initializeIndexedDB();
+    void initializeIndexedDB();
   }, []);
 
-  return generator;
+  return state;
 }

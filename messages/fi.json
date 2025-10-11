@@ -20,6 +20,8 @@
     "generate": "Tao salasanoja",
     "aiGenerate": "Tekoälytao salasanoja",
     "loading": "Ladataan sanoja...",
+    "error": "Salasanageneraattorin lataus epäonnistui",
+    "retry": "Yritä uudelleen",
     "options": "Valitse suosikkisi:",
     "settings": {
       "open": "Asetukset",

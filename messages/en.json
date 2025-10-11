@@ -20,6 +20,8 @@
     "generate": "Forge passphrases",
     "aiGenerate": "Forge passphrases with AI",
     "loading": "Loading words...",
+    "error": "Failed to load password generator",
+    "retry": "Retry",
     "options": "Choose your favorite:",
     "settings": {
       "open": "Settings",
