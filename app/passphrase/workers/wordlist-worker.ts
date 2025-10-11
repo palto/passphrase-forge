@@ -1,10 +1,9 @@
-// Import idb for IndexedDB access
-importScripts("https://cdn.jsdelivr.net/npm/idb@8/build/umd.js");
+import { openDB } from "idb";
 
 const DB_NAME = "wordlist-db";
 const DB_VERSION = 1;
 
-async function initializeWordlist(url) {
+async function initializeWordlist(url: string) {
   const startTime = performance.now();
   console.log("[Worker] Starting wordlist initialization");
 
@@ -31,7 +30,7 @@ async function initializeWordlist(url) {
     // Open database
     const dbStart = performance.now();
     console.log("[Worker] Opening IndexedDB");
-    const db = await idb.openDB(DB_NAME, DB_VERSION, {
+    const db = await openDB(DB_NAME, DB_VERSION, {
       upgrade(db) {
         db.createObjectStore("words");
         db.createObjectStore("meta");
@@ -63,11 +62,14 @@ async function initializeWordlist(url) {
     self.postMessage({ success: true, count: words.length });
   } catch (error) {
     console.error(`[Worker] Error during initialization:`, error);
-    self.postMessage({ success: false, error: error.message });
+    self.postMessage({
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error",
+    });
   }
 }
 
-self.onmessage = (event) => {
+self.onmessage = (event: MessageEvent<{ url: string }>) => {
   const { url } = event.data;
   initializeWordlist(url);
 };

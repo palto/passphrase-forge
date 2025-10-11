@@ -13,8 +13,10 @@ export function usePasswordGenerator() {
       const wordCount = await getWordCount();
 
       if (wordCount === 0) {
-        // Initialize wordlist in background worker
-        const worker = new Worker("/wordlist-worker.js");
+        // Initialize wordlist in background worker using Next.js worker bundling
+        const worker = new Worker(
+          new URL("./workers/wordlist-worker.ts", import.meta.url),
+        );
         worker.postMessage({ url: wordListUrl });
 
         await new Promise<void>((resolve, reject) => {
