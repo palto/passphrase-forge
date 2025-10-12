@@ -1,8 +1,15 @@
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 import {
   PasswordGenerator,
   PassphraseDetails,
+  GeneratorSettings,
+  defaultGeneratorSettings,
 } from "@/app/passphrase/password-generator";
-import { getGeneratorSettingsFromCookies } from "@/app/passphrase/settings-cookie-server";
+import {
+  decodeSettings,
+  SETTINGS_COOKIE_NAME,
+} from "@/app/passphrase/settings-cookie";
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
 let passwordGenerator: Promise<PasswordGenerator> | undefined;
@@ -20,10 +27,22 @@ export async function getPasswordGenerator() {
 
 export async function generateInitialPassphrases(count: number = 5): Promise<{
   passphrases: PassphraseDetails[];
-  settings: Awaited<ReturnType<typeof getGeneratorSettingsFromCookies>>;
+  settings: GeneratorSettings;
 }> {
   const generator = await getPasswordGenerator();
-  const settings = await getGeneratorSettingsFromCookies();
+
+  // Read settings from cookie
+  const value = await getCookie(SETTINGS_COOKIE_NAME, { cookies });
+  const settings = value
+    ? (() => {
+        try {
+          return decodeSettings(value);
+        } catch {
+          return defaultGeneratorSettings;
+        }
+      })()
+    : defaultGeneratorSettings;
+
   const passphrases = await generator.generateMultiple(count, settings);
   return { passphrases, settings };
 }

@@ -9,7 +9,8 @@ import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { SettingsButton } from "@/app/passphrase/settings-button";
 import { usePasswordGenerator } from "@/app/passphrase/usePasswordGenerator";
-import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie-client";
+
+import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie";
 
 const PASSPHRASE_COUNT = 5;
 
