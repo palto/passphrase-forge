@@ -75,6 +75,7 @@ This is a Next.js 14 app that generates secure passphrases with both traditional
 > **IMPORTANT:** Only create commits when the developer explicitly requests it. The developer is in charge and needs to validate changes before they are committed. Do not commit proactively.
 
 When creating commits:
+
 - Do not add co-authors in commit messages
 - Do not use emojis in commit messages
 - Keep commit messages clear and descriptive

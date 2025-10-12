@@ -28,7 +28,7 @@
       "title": "Passphrase Forge settings",
       "wordCount": "Words: {count}",
       "separator": "Separator",
-      "numberCount": "Numbers: {count}",
+      "digits": "Digits: {count}",
       "stripUmlauts": "Strip umlauts"
     }
   }

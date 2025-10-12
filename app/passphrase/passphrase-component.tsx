@@ -1,33 +1,36 @@
 "use client";
 import React, { useCallback, useState } from "react";
-import {
-  defaultGeneratorSettings,
-  GeneratorSettings,
-} from "@/app/passphrase/password-generator";
+import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { Button, TextInput, ClipboardWithIcon, Spinner } from "flowbite-react";
 import { HiSparkles } from "react-icons/hi2";
+import { FaHammer } from "react-icons/fa6";
 import { useTranslations } from "next-intl";
 import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { SettingsButton } from "@/app/passphrase/settings-button";
-import { useLocalStorage } from "usehooks-ts";
 import { usePasswordGenerator } from "@/app/passphrase/usePasswordGenerator";
+import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie-client";
 
 const PASSPHRASE_COUNT = 5;
 
 export function PassphraseComponent({
   initialPassphrases,
+  initialSettings,
 }: {
   readonly initialPassphrases: PassphraseDetails[];
+  readonly initialSettings: GeneratorSettings;
 }) {
   const t = useTranslations("PassphraseComponent");
-  const [generatorSettings, setGeneratorSettings] = useLocalStorage(
-    "generatorSettings",
-    defaultGeneratorSettings,
-  );
+  const [generatorSettings, setGeneratorSettingsState] =
+    useState<GeneratorSettings>(initialSettings);
   const [passphrases, setPassphrases] =
     useState<PassphraseDetails[]>(initialPassphrases);
   const { generator, isLoading, error } = usePasswordGenerator();
+
+  const setGeneratorSettings = useCallback((settings: GeneratorSettings) => {
+    setGeneratorSettingsState(settings);
+    setGeneratorSettingsCookie(settings);
+  }, []);
 
   const generateRegularPasswords = useCallback(async () => {
     if (!generator) return;
@@ -99,13 +102,11 @@ export function PassphraseComponent({
           disabled={isLoading || !!error}
         >
           {isLoading ? (
-            <>
-              <Spinner size="sm" className="mr-2" />
-              {t("loading")}
-            </>
+            <Spinner size="sm" className="mr-2" />
           ) : (
-            t("generate")
+            <FaHammer className="mr-2" />
           )}
+          {t("generate")}
         </Button>
         <SettingsButton
           value={generatorSettings}

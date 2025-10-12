@@ -77,23 +77,23 @@ export function SettingsButton(props: {
               />
             </div>
             <div className="p-4">
-              <Label htmlFor="numberCount">
-                {t("numberCount", { count: generatorSettings.numberCount })}
+              <Label htmlFor="digits">
+                {t("digits", { count: generatorSettings.digits })}
               </Label>
               <RangeSlider
-                id="numberCount"
+                id="digits"
                 sizing="sm"
-                value={generatorSettings.numberCount}
+                value={generatorSettings.digits}
                 onChange={(event) => {
                   setGeneratorSettings({
                     ...generatorSettings,
-                    numberCount: Number(event.target.value),
+                    digits: Number(event.target.value),
                   });
                 }}
                 min={0}
                 max={3}
                 step={1}
-                data-testid="number-count-slider"
+                data-testid="digits-slider"
               />
             </div>
             <div className="p-4">

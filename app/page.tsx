@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server";
 import { Version } from "@/app/version/version";
 export default async function Home() {
   const t = await getTranslations("Home");
-  const initialPassphrases = await generateInitialPassphrases(5);
+  const { passphrases, settings } = await generateInitialPassphrases(5);
 
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
@@ -22,7 +22,10 @@ export default async function Home() {
       </div>
       <h1 className="text-2xl">{t("welcome")}</h1>
       <hr></hr>
-      <PassphraseComponent initialPassphrases={initialPassphrases} />
+      <PassphraseComponent
+        initialPassphrases={passphrases}
+        initialSettings={settings}
+      />
       <HR className="w-full" />
       <AppDetails />
       <HR className="w-full" />

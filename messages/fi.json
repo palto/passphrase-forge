@@ -28,7 +28,7 @@
       "title": "Salasanasepän asetukset",
       "wordCount": "Sanoja: {count}",
       "separator": "Erotin",
-      "numberCount": "Numeroita: {count}",
+      "digits": "Numeroita: {count}",
       "stripUmlauts": "Poista ääkköset"
     }
   }

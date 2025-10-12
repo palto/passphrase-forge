@@ -86,7 +86,7 @@ describe("PasswordGenerator", () => {
     });
 
     it("should generate passphrase with no numbers", async () => {
-      const settings: Partial<GeneratorSettings> = { numberCount: 0 };
+      const settings: Partial<GeneratorSettings> = { digits: 0 };
       const details = await generator.generateDetails(settings);
 
       expect(details.parts.length).toBe(3); // Default 3 words
@@ -94,7 +94,7 @@ describe("PasswordGenerator", () => {
     });
 
     it("should generate passphrase with multiple numbers", async () => {
-      const settings: Partial<GeneratorSettings> = { numberCount: 3 };
+      const settings: Partial<GeneratorSettings> = { digits: 3 };
       const details = await generator.generateDetails(settings);
 
       const numberParts = details.parts.filter((part) => /^\d+$/.test(part));
@@ -123,7 +123,7 @@ describe("PasswordGenerator", () => {
       const generatorWithUmlauts = new PasswordGenerator(wordSource);
       const settings: Partial<GeneratorSettings> = {
         stripUmlauts: true,
-        numberCount: 0,
+        digits: 0,
       };
       const details = await generatorWithUmlauts.generateDetails(settings);
 
@@ -135,7 +135,7 @@ describe("PasswordGenerator", () => {
       const generatorWithUmlauts = new PasswordGenerator(wordSource);
       const settings: Partial<GeneratorSettings> = {
         stripUmlauts: false,
-        numberCount: 0,
+        digits: 0,
         wordCount: 5, // Increase chances of getting umlauts
       };
 
@@ -155,7 +155,7 @@ describe("PasswordGenerator", () => {
     it("should shuffle parts randomly", async () => {
       const settings: Partial<GeneratorSettings> = {
         wordCount: 3,
-        numberCount: 1,
+        digits: 1,
       };
 
       // Generate multiple passphrases to check randomness
@@ -277,7 +277,7 @@ describe("PasswordGenerator", () => {
     it("should handle negative number count", async () => {
       const wordSource = new ArrayWordSource(mockWordList);
       const generator = new PasswordGenerator(wordSource);
-      const settings: Partial<GeneratorSettings> = { numberCount: -1 };
+      const settings: Partial<GeneratorSettings> = { digits: -1 };
       const details = await generator.generateDetails(settings);
 
       // Should not include any numbers
@@ -298,7 +298,7 @@ describe("PasswordGenerator", () => {
       const generator = new PasswordGenerator(wordSource);
       const settings: Partial<GeneratorSettings> = {
         wordCount: 0,
-        numberCount: 100,
+        digits: 100,
       };
 
       // Generate multiple times to check number range
@@ -314,7 +314,7 @@ describe("PasswordGenerator", () => {
     it("should have correct default values", () => {
       expect(defaultGeneratorSettings.wordCount).toBe(3);
       expect(defaultGeneratorSettings.separator).toBe("-");
-      expect(defaultGeneratorSettings.numberCount).toBe(1);
+      expect(defaultGeneratorSettings.digits).toBe(1);
       expect(defaultGeneratorSettings.stripUmlauts).toBe(true);
     });
   });

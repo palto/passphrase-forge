@@ -3,7 +3,7 @@ import { WordSource, ArrayWordSource } from "@/app/passphrase/word-source";
 export type GeneratorSettings = {
   readonly wordCount: number;
   readonly separator: string;
-  readonly numberCount: number;
+  readonly digits: number;
   readonly stripUmlauts?: boolean;
 };
 
@@ -16,7 +16,7 @@ export type PassphraseDetails = {
 export const defaultGeneratorSettings: GeneratorSettings = {
   wordCount: 3,
   separator: "-",
-  numberCount: 1,
+  digits: 1,
   stripUmlauts: true,
 };
 
@@ -42,16 +42,16 @@ export class PasswordGenerator {
   async generateDetails(
     generationSettings?: Partial<GeneratorSettings>,
   ): Promise<PassphraseDetails> {
-    const { wordCount, numberCount, stripUmlauts, separator } = {
+    const { wordCount, digits, stripUmlauts, separator } = {
       ...this.defaultSettings,
       ...generationSettings,
     };
     const parts = await Promise.all(
       Array.from({ length: wordCount }, () => this.getRandomWord()),
     );
-    if (numberCount > 0) {
+    if (digits > 0) {
       const numbers = Array.from(
-        { length: numberCount },
+        { length: digits },
         () => Math.floor(Math.random() * 9) + 1,
       );
       parts.push(numbers.join(""));
