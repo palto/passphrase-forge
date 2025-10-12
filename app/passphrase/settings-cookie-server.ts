@@ -1,25 +1,26 @@
+import { getCookie } from "cookies-next";
 import { cookies } from "next/headers";
 import {
   GeneratorSettings,
   defaultGeneratorSettings,
 } from "@/app/passphrase/password-generator";
-import { decodeSettings } from "@/app/passphrase/settings-cookie-shared";
-
-const SETTINGS_COOKIE_NAME = "generatorSettings";
+import {
+  decodeSettings,
+  SETTINGS_COOKIE_NAME,
+} from "@/app/passphrase/settings-cookie-shared";
 
 /**
  * Server-side: Read generator settings from cookies
  */
 export async function getGeneratorSettingsFromCookies(): Promise<GeneratorSettings> {
-  const cookieStore = await cookies();
-  const settingsCookie = cookieStore.get(SETTINGS_COOKIE_NAME);
+  const value = await getCookie(SETTINGS_COOKIE_NAME, { cookies });
 
-  if (!settingsCookie?.value) {
+  if (!value) {
     return defaultGeneratorSettings;
   }
 
   try {
-    return decodeSettings(settingsCookie.value);
+    return decodeSettings(value);
   } catch {
     return defaultGeneratorSettings;
   }

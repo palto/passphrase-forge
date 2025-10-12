@@ -3,6 +3,8 @@ import {
   defaultGeneratorSettings,
 } from "@/app/passphrase/password-generator";
 
+export const SETTINGS_COOKIE_NAME = "generatorSettings";
+
 // Short key mapping for query string format
 export const KEY_MAP = {
   wc: "wordCount",
