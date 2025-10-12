@@ -18,6 +18,7 @@ export default async function Home() {
           alt="Labdays logo"
           width={200}
           height={128.5}
+          className="w-auto h-auto"
         />
       </div>
       <h1 className="text-2xl">{t("welcome")}</h1>
