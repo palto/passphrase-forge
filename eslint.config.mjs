@@ -14,6 +14,7 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
       ".flowbite-react/init.tsx",
+      "bin/**/*.js",
     ],
   },
   ...compat.config({
