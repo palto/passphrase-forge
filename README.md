@@ -92,8 +92,6 @@ This project is private and proprietary.
 
 ## Roadmap
 
-- [ ] Content from CMS
+- [ ] Support english passphrases
 - [ ] Wordlist in database
-- [x] AI augmented passphrase settings
-- [x] Analytics integration
-- [x] Internationalization support
+- [ ] Pregenerated AI passphrases in database
