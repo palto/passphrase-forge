@@ -2,6 +2,9 @@
   "name": "passphrase-forge",
   "version": "2025.3.0",
   "private": true,
+  "bin": {
+    "passphrase": "./bin/passphrase.js"
+  },
   "engines": {
     "node": "22.x"
   },
@@ -19,7 +22,9 @@
     "check": "npm run typecheck && npm run lint && npm run prettier:check && npm run test",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "vercel:env": "vercel env pull"
+    "vercel:env": "vercel env pull",
+    "cli": "tsx bin/passphrase-cli.ts",
+    "cli:basic": "tsx bin/passphrase-cli.ts --generator basic"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^2.0.0",
@@ -27,6 +32,7 @@
     "@next/bundle-analyzer": "15.5.6",
     "@vercel/analytics": "^1.5.0",
     "ai": "^5.0.76",
+    "commander": "^14.0.1",
     "cookies-next": "^6.1.0",
     "flowbite-react": "^0.12.9",
     "idb": "^8.0.3",
@@ -61,6 +67,7 @@
     "postcss": "^8",
     "prettier": "^3.6.2",
     "tailwindcss": "^4.1.14",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"

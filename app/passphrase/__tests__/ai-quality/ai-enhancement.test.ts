@@ -4,7 +4,8 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { aiEnhance } from "../../ai/actions";
+import { createGateway } from "@ai-sdk/gateway";
+import { aiEnhance } from "../../ai/core";
 import { PassphraseDetails } from "../../password-generator";
 
 // Test constants
@@ -13,9 +14,15 @@ const MIN_WORD_COUNT = 4;
 const MAX_WORD_COUNT = 7;
 const TEST_TIMEOUT_MS = 30000;
 
+// Create gateway model for testing
+const gateway = createGateway({
+  // OIDC authentication is automatic on Vercel deployments
+  // Locally, authentication is handled via vercel env pull
+});
+const model = gateway("openai/gpt-4o");
+
 // Skip all AI tests if not explicitly enabled
-const skipAITests =
-  process.env.RUN_AI_TESTS !== "true" || !process.env.OPENAI_API_KEY;
+const skipAITests = process.env.RUN_AI_TESTS !== "true";
 
 // Test input cases
 const testCases = [
@@ -72,7 +79,7 @@ describe("AI Quality Tests", () => {
 
           // Act
           const promises = Array.from({ length: PARALLEL_GENERATIONS }, () =>
-            aiEnhance(mockDetails),
+            aiEnhance(mockDetails, model),
           );
 
           const results = await Promise.all(promises);
