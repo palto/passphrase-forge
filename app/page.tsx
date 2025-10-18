@@ -47,7 +47,7 @@ export default async function Home() {
   );
 }
 
-export async function generateInitialPassphrases(count: number = 5): Promise<{
+async function generateInitialPassphrases(count: number = 5): Promise<{
   passphrases: PassphraseDetails[];
   settings: GeneratorSettings;
 }> {
