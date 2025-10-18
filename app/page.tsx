@@ -16,8 +16,9 @@ export default async function Home() {
         <Image
           src="/aitio-labdays2018.png"
           alt="Labdays logo"
-          width={200}
-          height={128.5}
+          width={256}
+          height={164}
+          priority
           className="w-full h-auto"
         />
       </div>
