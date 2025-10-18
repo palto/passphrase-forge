@@ -134,8 +134,7 @@ This project uses **Vitest** as the primary testing framework with the following
 ### Test Configuration
 
 - **vitest.config.mts**: Main Vitest configuration with React plugin and path resolution
-- **vitest.setup.ts**: Test setup file that loads environment variables from `.env.development.local`
-- **Environment loading**: Automatically loads `OPENAI_API_KEY` and other env vars for seamless testing
+- **vitest.setup.ts**: Test setup file that loads environment variables from `.env.local`
 
 ### Test Types and Structure
 
@@ -165,7 +164,6 @@ app/passphrase/__tests__/ai-quality/
 
 - **Unit tests**: Always run, no external dependencies
 - **AI tests**: Run with `npm run test:ai` when API key is configured
-- **Environment setup**: Loads `OPENAI_API_KEY` from `.env.development.local`
 
 ### Key Features
 

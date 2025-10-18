@@ -1,7 +1,12 @@
 "use server";
 import { generateObject } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { createGateway } from "@ai-sdk/gateway";
 import { z } from "zod";
+
+const gateway = createGateway({
+  // OIDC authentication is automatic on Vercel deployments
+  // Locally, authentication is handled via vercel env pull
+});
 import {
   defaultGeneratorSettings,
   GeneratorSettings,
@@ -75,7 +80,7 @@ export async function aiEnhance(
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       const result = await generateObject({
-        model: openai("gpt-4o"),
+        model: gateway("openai/gpt-4o"),
         system: `
         TÄRKEINTÄ: Säilytä numero täsmälleen samanlaisena! Älä koskaan muuta numeroa sanaksi (esim. "5" ei saa tulla "viisi").
         CRITICAL: Keep the number exactly as-is! Never convert numbers to words (e.g. "5" must NOT become "viisi").

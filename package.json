@@ -19,9 +19,10 @@
     "check": "npm run typecheck && npm run lint && npm run prettier:check && npm run test",
     "prettier": "prettier --write .",
     "prettier:check": "prettier --check .",
-    "vercel:env": "vercel env pull .env.development.local"
+    "vercel:env": "vercel env pull"
   },
   "dependencies": {
+    "@ai-sdk/gateway": "^2.0.0",
     "@ai-sdk/openai": "^2.0.52",
     "@next/bundle-analyzer": "15.5.6",
     "@vercel/analytics": "^1.5.0",
