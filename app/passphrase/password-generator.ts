@@ -1,7 +1,6 @@
 import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
-import { createGateway } from "@ai-sdk/gateway";
-import { aiEnhance } from "@/app/passphrase/ai/core";
+import { getEnhancer } from "@/app/passphrase/ai/enhancers";
 
 export type GeneratorMode = "basic" | "gpt-4o";
 
@@ -31,27 +30,6 @@ export class PasswordGenerator {
     defaultGeneratorSettings;
 
   constructor(private readonly wordSource: WordSource) {}
-
-  /**
-   * Enhance passphrase details using AI (GPT-4o)
-   */
-  private async enhanceWithGpt4o(
-    details: PassphraseDetails,
-    stripUmlauts: boolean,
-  ): Promise<PassphraseDetails> {
-    const gateway = createGateway({
-      // OIDC authentication is automatic on Vercel deployments
-      // Locally, authentication is handled via vercel env pull
-    });
-    const model = gateway("openai/gpt-4o");
-
-    const aiDetails = await aiEnhance(details, model);
-    const finalPassphrase = stripUmlauts
-      ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
-      : aiDetails.passphrase;
-
-    return { ...aiDetails, passphrase: finalPassphrase };
-  }
 
   async getRandomWord(): Promise<string> {
     const totalWords = await this.wordSource.getWordCount();
@@ -96,9 +74,16 @@ export class PasswordGenerator {
       passphrase: parts.join(separator),
     };
 
-    // Enhance with GPT-4o if mode is gpt-4o
-    if (mode === "gpt-4o") {
-      return this.enhanceWithGpt4o(basicDetails, stripUmlauts ?? true);
+    // Enhance with AI if mode is not basic
+    if (mode !== "basic") {
+      const enhancer = getEnhancer(mode);
+      if (enhancer) {
+        const aiDetails = await enhancer(basicDetails);
+        const passphrase = stripUmlauts
+          ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
+          : aiDetails.passphrase;
+        return { ...aiDetails, passphrase };
+      }
     }
 
     // Apply stripUmlauts for basic mode
