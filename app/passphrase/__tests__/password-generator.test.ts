@@ -4,7 +4,8 @@ import {
   GeneratorSettings,
   defaultGeneratorSettings,
 } from "../password-generator";
-import { ArrayWordSource } from "../word-source";
+
+import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
 
 describe("PasswordGenerator", () => {
   const mockWordList = ["kissa", "koira", "hevonen", "lintu", "kala"];

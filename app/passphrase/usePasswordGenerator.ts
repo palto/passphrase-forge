@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
 import { PasswordGenerator } from "@/app/passphrase/password-generator";
-import { getWordCount } from "@/app/passphrase/db/wordlist-db";
-import { IndexedDBWordSource } from "@/app/passphrase/word-source";
+
+import {
+  IndexedDbWordSource,
+  getWordCount,
+} from "@/app/passphrase/word-source/indexed-db-word-source";
 
 const wordListUrl = process.env.NEXT_PUBLIC_WORD_LIST_URL as string;
 
@@ -63,7 +66,7 @@ export function usePasswordGenerator(): PasswordGeneratorState {
         await initPromise;
 
         // Create generator with IndexedDB word source
-        const wordSource = new IndexedDBWordSource();
+        const wordSource = new IndexedDbWordSource();
         const gen = new PasswordGenerator(wordSource);
 
         setState({

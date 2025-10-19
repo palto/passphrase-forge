@@ -1,4 +1,5 @@
-import { WordSource, ArrayWordSource } from "@/app/passphrase/word-source";
+import { WordSource } from "@/app/passphrase/word-source/word-source";
+import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
 
 export type GeneratorSettings = {
   readonly wordCount: number;

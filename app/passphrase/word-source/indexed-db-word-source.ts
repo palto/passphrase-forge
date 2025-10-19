@@ -1,4 +1,19 @@
+import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { openDB, DBSchema, IDBPDatabase } from "idb";
+
+const DB_NAME = "wordlist-db";
+const DB_VERSION = 1;
+let dbPromise: Promise<IDBPDatabase<WordlistDB>> | null = null;
+
+export class IndexedDbWordSource implements WordSource {
+  async getWord(id: number): Promise<string> {
+    return getWord(id);
+  }
+
+  async getWordCount(): Promise<number> {
+    return getWordCount();
+  }
+}
 
 interface WordlistDB extends DBSchema {
   words: {
@@ -10,11 +25,6 @@ interface WordlistDB extends DBSchema {
     value: number;
   };
 }
-
-const DB_NAME = "wordlist-db";
-const DB_VERSION = 1;
-
-let dbPromise: Promise<IDBPDatabase<WordlistDB>> | null = null;
 
 function getDB(): Promise<IDBPDatabase<WordlistDB>> {
   if (!dbPromise) {
@@ -41,20 +51,4 @@ export async function getWord(id: number): Promise<string> {
     throw new Error(`Word not found at id ${id}`);
   }
   return word;
-}
-
-export async function storeWords(words: string[]): Promise<void> {
-  const db = await getDB();
-  const tx = db.transaction(["words", "meta"], "readwrite");
-
-  // Store word count in meta
-  await tx.objectStore("meta").put(words.length, "count");
-
-  // Store each word with its index as key
-  const wordStore = tx.objectStore("words");
-  for (let i = 0; i < words.length; i++) {
-    await wordStore.put(words[i], i);
-  }
-
-  await tx.done;
 }

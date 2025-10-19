@@ -2,7 +2,7 @@
 
 import { Command } from "commander";
 import { config } from "dotenv";
-import { getWordlistGenerator } from "@/lib/cli/wordlist-loader";
+import { getPasswordGenerator } from "@/lib/cli/wordlist-loader";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { getGenerator } from "@/app/passphrase/generators/registry";
 
@@ -28,7 +28,7 @@ program
   )
   .action(async (options) => {
     try {
-      const passwordGenerator = await getWordlistGenerator();
+      const passwordGenerator = await getPasswordGenerator();
       const passphraseGenerator = getGenerator(
         options.generator,
         passwordGenerator,
