@@ -20,7 +20,11 @@ program
   .option("-c, --count <number>", "Number of passphrases to generate", "1")
   .option("--no-strip-umlauts", "Don't strip Finnish umlauts (ä, ö)")
   .option("--json", "Output as JSON")
-  .option("-m, --mode <type>", "Generation mode: basic or gpt-4o", "gpt-4o")
+  .option(
+    "-m, --mode <type>",
+    "Generation mode: basic, gpt-4o, or gpt-oss-120b",
+    "gpt-4o",
+  )
   .action(async (options) => {
     try {
       const passwordGenerator = await getPasswordGenerator();

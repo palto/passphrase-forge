@@ -1,5 +1,6 @@
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { enhanceWithGpt4o } from "@/app/passphrase/ai/gpt4o";
+import { enhanceWithGptOss120b } from "@/app/passphrase/ai/gpt-oss-120b";
 
 /**
  * Type for building phrases from word and digit parts
@@ -19,6 +20,7 @@ const phraseBuilders = {
   basic: async (details: PhraseBuilderInput) =>
     details.parts.sort(() => Math.random() - 0.5).join(details.separator),
   "gpt-4o": enhanceWithGpt4o,
+  "gpt-oss-120b": enhanceWithGptOss120b,
 } as const satisfies Record<string, PhraseBuilder>;
 
 /**
