@@ -12,19 +12,22 @@ export type PhraseGenerator = (
 export type PhraseGeneratorDetail = Omit<PassphraseDetails, "passphrase">;
 
 /**
- * Registry of AI enhancers by mode name
+ * Registry of phrase generators by mode name
  */
-const phraseGenerator: Record<string, PhraseGenerator> = {
-  "gpt-4o": enhanceWithGpt4o,
-  basic: async (details) =>
+const phraseGenerators = {
+  basic: async (details: PhraseGeneratorDetail) =>
     details.parts.sort(() => Math.random() - 0.5).join(details.separator),
-};
+  "gpt-4o": enhanceWithGpt4o,
+} as const satisfies Record<string, PhraseGenerator>;
+
+/**
+ * Available generator mode types
+ */
+export type GeneratorMode = keyof typeof phraseGenerators;
 
 /**
  * Get a phrase generator by mode name
  */
-export function getPhraseGenerator(mode: string): PhraseGenerator {
-  if (phraseGenerator[mode] === undefined)
-    throw new Error("Mode not found: " + mode);
-  return phraseGenerator[mode];
+export function getPhraseGenerator(mode: GeneratorMode): PhraseGenerator {
+  return phraseGenerators[mode];
 }

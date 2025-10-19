@@ -1,8 +1,12 @@
 import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
-import { getPhraseGenerator } from "@/app/passphrase/phrase-generator";
+import {
+  getPhraseGenerator,
+  type GeneratorMode,
+} from "@/app/passphrase/phrase-generator";
 
-export type GeneratorMode = "basic" | "gpt-4o";
+// Re-export GeneratorMode for external use
+export type { GeneratorMode };
 
 export type GeneratorSettings = {
   readonly wordCount: number;
