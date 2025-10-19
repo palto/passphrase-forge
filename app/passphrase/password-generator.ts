@@ -1,9 +1,9 @@
 import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
 import {
-  getPhraseGenerator,
+  getPhraseBuilder,
   type GeneratorMode,
-} from "@/app/passphrase/phrase-generator";
+} from "@/app/passphrase/phrase-builder";
 
 // Re-export GeneratorMode for external use
 export type { GeneratorMode };
@@ -71,9 +71,9 @@ export class PasswordGenerator {
       parts.push(numbers.join(""));
     }
 
-    // Use a generation strategy based on the requested mode
-    const phraseGenerator = getPhraseGenerator(mode);
-    let passphrase = await phraseGenerator({ parts, separator });
+    // Use a builder strategy based on the requested mode
+    const phraseBuilder = getPhraseBuilder(mode);
+    let passphrase = await phraseBuilder({ parts, separator });
 
     // Post-processing
     passphrase = stripUmlauts

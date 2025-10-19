@@ -6,14 +6,14 @@ import {
   PassphraseDetails,
   PasswordGenerator,
 } from "@/app/passphrase/password-generator";
-import { PhraseGeneratorDetail } from "@/app/passphrase/phrase-generator";
+import { PhraseBuilderInput } from "@/app/passphrase/phrase-builder";
 
 /**
  * Enhance a single passphrase using AI
  * Pure function that can be used in any environment (web, CLI, etc.)
  */
 export async function aiEnhance(
-  details: PhraseGeneratorDetail,
+  details: PhraseBuilderInput,
   model: LanguageModel,
 ): Promise<PassphraseDetails> {
   const result = await generateObject({

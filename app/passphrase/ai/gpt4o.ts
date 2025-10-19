@@ -1,7 +1,7 @@
 import { LanguageModel } from "ai";
 import { createGateway } from "@ai-sdk/gateway";
 import { aiEnhance } from "@/app/passphrase/ai/core";
-import type { PhraseGeneratorDetail } from "@/app/passphrase/phrase-generator";
+import type { PhraseBuilderInput } from "@/app/passphrase/phrase-builder";
 
 /**
  * Cached GPT-4o model instance
@@ -29,7 +29,7 @@ function getGpt4oModel(): LanguageModel {
  * Gateway and model are created once and cached for reuse
  */
 export async function enhanceWithGpt4o(
-  details: PhraseGeneratorDetail,
+  details: PhraseBuilderInput,
 ): Promise<string> {
   const model = getGpt4oModel();
   return (await aiEnhance(details, model)).passphrase;
