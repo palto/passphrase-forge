@@ -1,5 +1,6 @@
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { enhanceWithGpt4o } from "@/app/passphrase/ai/gpt4o";
+import { enhanceWithGpt41 } from "@/app/passphrase/ai/gpt-4.1";
 import { enhanceWithGptOss120b } from "@/app/passphrase/ai/gpt-oss-120b";
 
 /**
@@ -20,6 +21,7 @@ const phraseBuilders = {
   basic: async (details: PhraseBuilderInput) =>
     details.parts.sort(() => Math.random() - 0.5).join(details.separator),
   "gpt-4o": enhanceWithGpt4o,
+  "gpt-4.1": enhanceWithGpt41,
   "gpt-oss-120b": enhanceWithGptOss120b,
 } as const satisfies Record<string, PhraseBuilder>;
 

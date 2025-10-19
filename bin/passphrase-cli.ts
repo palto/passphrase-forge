@@ -22,7 +22,7 @@ program
   .option("--json", "Output as JSON")
   .option(
     "-m, --mode <type>",
-    "Generation mode: basic, gpt-4o, or gpt-oss-120b",
+    "Generation mode: basic, gpt-4o, gpt-4.1, or gpt-oss-120b",
     "gpt-4o",
   )
   .action(async (options) => {
