@@ -1,6 +1,6 @@
 import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
-import { getEnhancer } from "@/app/passphrase/ai/enhancers";
+import { getPhraseGenerator } from "@/app/passphrase/phrase-generator";
 
 export type GeneratorMode = "basic" | "gpt-4o";
 
@@ -54,7 +54,7 @@ export class PasswordGenerator {
 
     const mode = settings.mode || "basic";
 
-    // Generate basic passphrase details
+    // Generate seed parts for the passphrase
     const { wordCount, digits, stripUmlauts, separator } = settings;
     const parts = await Promise.all(
       Array.from({ length: wordCount }, () => this.getRandomWord()),
@@ -66,33 +66,19 @@ export class PasswordGenerator {
       );
       parts.push(numbers.join(""));
     }
-    parts.sort(() => Math.random() - 0.5);
 
-    const basicDetails: PassphraseDetails = {
-      parts,
-      separator,
-      passphrase: parts.join(separator),
-    };
+    // Use a generation strategy based on the requested mode
+    const phraseGenerator = getPhraseGenerator(mode);
+    let passphrase = await phraseGenerator({ parts, separator });
 
-    // Enhance with AI if mode is not basic
-    if (mode !== "basic") {
-      const enhancer = getEnhancer(mode);
-      if (enhancer) {
-        const aiDetails = await enhancer(basicDetails);
-        const passphrase = stripUmlauts
-          ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
-          : aiDetails.passphrase;
-        return { ...aiDetails, passphrase };
-      }
-    }
-
-    // Apply stripUmlauts for basic mode
-    const passphrase = stripUmlauts
-      ? PasswordGenerator.stripUmlauts(basicDetails.passphrase)
-      : basicDetails.passphrase;
+    // Post-processing
+    passphrase = stripUmlauts
+      ? PasswordGenerator.stripUmlauts(passphrase)
+      : passphrase;
 
     return {
-      ...basicDetails,
+      parts,
+      separator,
       passphrase,
     };
   }
