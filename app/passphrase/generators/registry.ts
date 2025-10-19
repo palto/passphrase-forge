@@ -2,6 +2,7 @@ import { PasswordGenerator } from "@/app/passphrase/password-generator";
 import { PassphraseGenerator } from "@/app/passphrase/generators/base";
 import { BasicPassphraseGenerator } from "@/app/passphrase/generators/basic-generator";
 import { Gpt4oPassphraseGenerator } from "@/app/passphrase/generators/gpt4o-generator";
+import { ClaudeHaikuPassphraseGenerator } from "@/app/passphrase/generators/claude-haiku-generator";
 
 /**
  * Factory function for creating passphrase generators
@@ -17,6 +18,8 @@ const generators: Record<string, GeneratorFactory> = {
   basic: (passwordGenerator) => new BasicPassphraseGenerator(passwordGenerator),
   "gpt-4o": (passwordGenerator) =>
     new Gpt4oPassphraseGenerator(passwordGenerator),
+  claude: (passwordGenerator) =>
+    new ClaudeHaikuPassphraseGenerator(passwordGenerator),
 };
 
 /**
