@@ -58,7 +58,7 @@ export class PasswordGenerator {
     }
     parts.sort(() => Math.random() - 0.5);
     const passphrase = stripUmlauts
-      ? PasswordGenerator.stipUmlauts(parts.join(separator))
+      ? PasswordGenerator.stripUmlauts(parts.join(separator))
       : parts.join(separator);
 
     return {
@@ -79,7 +79,7 @@ export class PasswordGenerator {
     );
   }
 
-  static stipUmlauts(text: string) {
+  static stripUmlauts(text: string) {
     return text
       .replace(/ä/g, "a")
       .replace(/ö/g, "o")

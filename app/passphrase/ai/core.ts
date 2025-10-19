@@ -88,7 +88,7 @@ export async function generateAiPassphrase(
     ...generatorSettings,
   };
   const passphrase = settings.stripUmlauts
-    ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+    ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
     : aiDetails.passphrase;
   return { ...aiDetails, passphrase };
 }
@@ -121,7 +121,7 @@ export async function generateMultipleAiPassphrases(
     try {
       const aiDetails = await aiEnhance(details, model);
       const passphrase = settings.stripUmlauts
-        ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+        ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
         : aiDetails.passphrase;
       return { ...aiDetails, passphrase };
     } catch (error) {

@@ -186,35 +186,35 @@ describe("PasswordGenerator", () => {
   describe("static methods", () => {
     describe("stipUmlauts()", () => {
       it("should replace lowercase ä with a", () => {
-        expect(PasswordGenerator.stipUmlauts("äiti")).toBe("aiti");
+        expect(PasswordGenerator.stripUmlauts("äiti")).toBe("aiti");
       });
 
       it("should replace lowercase ö with o", () => {
-        expect(PasswordGenerator.stipUmlauts("pöytä")).toBe("poyta");
+        expect(PasswordGenerator.stripUmlauts("pöytä")).toBe("poyta");
       });
 
       it("should replace uppercase Ä with A", () => {
-        expect(PasswordGenerator.stipUmlauts("Äiti")).toBe("Aiti");
+        expect(PasswordGenerator.stripUmlauts("Äiti")).toBe("Aiti");
       });
 
       it("should replace uppercase Ö with O", () => {
-        expect(PasswordGenerator.stipUmlauts("Öljy")).toBe("Oljy");
+        expect(PasswordGenerator.stripUmlauts("Öljy")).toBe("Oljy");
       });
 
       it("should replace all umlauts in a string", () => {
-        expect(PasswordGenerator.stipUmlauts("äiti-pöytä-Äiti-Öljy")).toBe(
+        expect(PasswordGenerator.stripUmlauts("äiti-pöytä-Äiti-Öljy")).toBe(
           "aiti-poyta-Aiti-Oljy",
         );
       });
 
       it("should not modify strings without umlauts", () => {
-        expect(PasswordGenerator.stipUmlauts("hello-world")).toBe(
+        expect(PasswordGenerator.stripUmlauts("hello-world")).toBe(
           "hello-world",
         );
       });
 
       it("should handle empty string", () => {
-        expect(PasswordGenerator.stipUmlauts("")).toBe("");
+        expect(PasswordGenerator.stripUmlauts("")).toBe("");
       });
     });
 

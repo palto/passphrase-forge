@@ -53,7 +53,7 @@ Muista:
       ...settings,
     };
     const passphrase = finalSettings.stripUmlauts
-      ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+      ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
       : aiDetails.passphrase;
     return { ...aiDetails, passphrase };
   }
@@ -78,7 +78,7 @@ Muista:
       try {
         const aiDetails = await this.enhanceWithClaude(details);
         const passphrase = finalSettings.stripUmlauts
-          ? PasswordGenerator.stipUmlauts(aiDetails.passphrase)
+          ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
           : aiDetails.passphrase;
         return { ...aiDetails, passphrase };
       } catch (error) {
