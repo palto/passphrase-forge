@@ -23,7 +23,7 @@ program
   .option("--json", "Output as JSON")
   .option(
     "-g, --generator <type>",
-    "Generator type: basic, gpt-4o, or claude",
+    "Generator type: basic, gpt-4o, gpt-5-mini, or claude",
     "gpt-4o",
   )
   .action(async (options) => {

@@ -54,6 +54,21 @@ This is a Next.js 14 app that generates secure passphrases with both traditional
 - Dark mode support with theme persistence
 - Responsive design optimized for mobile
 
+### Extending Password Generation
+
+The system uses two key extension points:
+
+**Custom Word Sources** (`app/passphrase/word-source.ts:3`):
+
+- Implement `WordSource` interface with `getWord(id)` and `getWordCount()` methods
+- Examples: `ArrayWordSource`, `IndexedDBWordSource`
+
+**Custom Generation Strategies** (`app/passphrase/generators/`):
+
+- Implement `PassphraseGenerator` interface from `base.ts:10`
+- Register in `generators/registry.ts:17` with a factory function
+- Examples: `BasicPassphraseGenerator`, `Gpt4oPassphraseGenerator`, `ClaudeHaikuPassphraseGenerator`
+
 ### Key Features
 
 - Client-side wordlist caching for offline generation

@@ -7,10 +7,6 @@ import {
   PasswordGenerator,
 } from "@/app/passphrase/password-generator";
 
-const schema = z.object({
-  passphrase: z.string(),
-});
-
 /**
  * Enhance a single passphrase using AI
  * Pure function that can be used in any environment (web, CLI, etc.)
@@ -19,14 +15,9 @@ export async function aiEnhance(
   details: PassphraseDetails,
   model: LanguageModel,
 ): Promise<PassphraseDetails> {
-  const maxRetries = 3;
-  let lastError: Error | null = null;
-
-  for (let attempt = 1; attempt <= maxRetries; attempt++) {
-    try {
-      const result = await generateObject({
-        model,
-        system: `
+  const result = await generateObject({
+    model,
+    system: `
         TÄRKEINTÄ: Säilytä numero täsmälleen samanlaisena! Älä koskaan muuta numeroa sanaksi (esim. "5" ei saa tulla "viisi").
         CRITICAL: Keep the number exactly as-is! Never convert numbers to words (e.g. "5" must NOT become "viisi").
 
@@ -65,30 +56,20 @@ export async function aiEnhance(
 
         Anna lopullinen teksti JSON-muodossa avaimella "passphrase"
         `,
-        prompt: details.parts.join(" "),
-        schema,
-      });
+    prompt: details.parts.join(" "),
+    schema: z.object({
+      passphrase: z.string(),
+    }),
+  });
 
-      const parts = result.object.passphrase
-        // Remove characters , . : from passphrase
-        .replace(/[,.:]/g, "")
-        .split(" ");
+  const parts = result.object.passphrase
+    // Remove characters , . : from passphrase
+    .replace(/[,.:]/g, "")
+    .split(" ");
 
-      const passphrase = parts.join(details.separator);
+  const passphrase = parts.join(details.separator);
 
-      return { ...details, parts, passphrase };
-    } catch (error) {
-      lastError = error instanceof Error ? error : new Error(String(error));
-
-      if (attempt === maxRetries) {
-        break;
-      }
-    }
-  }
-
-  throw new Error(
-    `AI enhancement failed after ${maxRetries} attempts. Last error: ${lastError?.message}`,
-  );
+  return { ...details, parts, passphrase };
 }
 
 /**
