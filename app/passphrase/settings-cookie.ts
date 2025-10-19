@@ -16,7 +16,7 @@ export const KEY_MAP = {
 
 // Reverse mapping for encoding
 export const REVERSE_KEY_MAP: Record<
-  keyof GeneratorSettings,
+  Exclude<keyof GeneratorSettings, "mode">,
   keyof typeof KEY_MAP
 > = {
   wordCount: "wc",

@@ -120,6 +120,30 @@ Implement Test C → Run test → Verify it passes → Mark todo complete
 
 This prevents creating large numbers of faulty tests that require extensive debugging later.
 
+### Development Philosophy
+
+**Build simple first, then optimize.**
+
+This is how professional developers work:
+
+1. **Start with the simplest working implementation** - no premature optimization
+2. **Verify it works correctly** - run tests, ensure functionality is solid
+3. **Only optimize when needed** - based on actual performance issues or explicit requirements
+4. **Keep code maintainable** - simple code is easier to understand and modify
+
+**Example:**
+
+- Instead of building a complex batching system with shared resources upfront
+- First build: Call the function N times in parallel (simple, obvious, works)
+- Then optimize: If performance becomes an issue, add batching/caching
+
+**Why this matters:**
+
+- Simple code has fewer bugs
+- Easier to understand for future maintainers
+- Optimization can be added later when you understand the actual bottlenecks
+- Premature optimization wastes time and adds complexity
+
 ### Implementation Scope Guidelines
 
 When implementing any feature:

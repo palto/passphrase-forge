@@ -1,11 +1,16 @@
 import { WordSource } from "@/app/passphrase/word-source/word-source";
 import { ArrayWordSource } from "@/app/passphrase/word-source/array-word-source";
+import { createGateway } from "@ai-sdk/gateway";
+import { aiEnhance } from "@/app/passphrase/ai/core";
+
+export type GeneratorMode = "basic" | "gpt-4o";
 
 export type GeneratorSettings = {
   readonly wordCount: number;
   readonly separator: string;
   readonly digits: number;
   readonly stripUmlauts?: boolean;
+  readonly mode?: GeneratorMode;
 };
 
 export type PassphraseDetails = {
@@ -27,6 +32,27 @@ export class PasswordGenerator {
 
   constructor(private readonly wordSource: WordSource) {}
 
+  /**
+   * Enhance passphrase details using AI (GPT-4o)
+   */
+  private async enhanceWithGpt4o(
+    details: PassphraseDetails,
+    stripUmlauts: boolean,
+  ): Promise<PassphraseDetails> {
+    const gateway = createGateway({
+      // OIDC authentication is automatic on Vercel deployments
+      // Locally, authentication is handled via vercel env pull
+    });
+    const model = gateway("openai/gpt-4o");
+
+    const aiDetails = await aiEnhance(details, model);
+    const finalPassphrase = stripUmlauts
+      ? PasswordGenerator.stripUmlauts(aiDetails.passphrase)
+      : aiDetails.passphrase;
+
+    return { ...aiDetails, passphrase: finalPassphrase };
+  }
+
   async getRandomWord(): Promise<string> {
     const totalWords = await this.wordSource.getWordCount();
     const randomId = Math.floor(Math.random() * totalWords);
@@ -43,10 +69,15 @@ export class PasswordGenerator {
   async generateDetails(
     generationSettings?: Partial<GeneratorSettings>,
   ): Promise<PassphraseDetails> {
-    const { wordCount, digits, stripUmlauts, separator } = {
+    const settings = {
       ...this.defaultSettings,
       ...generationSettings,
     };
+
+    const mode = settings.mode || "basic";
+
+    // Generate basic passphrase details
+    const { wordCount, digits, stripUmlauts, separator } = settings;
     const parts = await Promise.all(
       Array.from({ length: wordCount }, () => this.getRandomWord()),
     );
@@ -58,13 +89,25 @@ export class PasswordGenerator {
       parts.push(numbers.join(""));
     }
     parts.sort(() => Math.random() - 0.5);
-    const passphrase = stripUmlauts
-      ? PasswordGenerator.stripUmlauts(parts.join(separator))
-      : parts.join(separator);
 
-    return {
+    const basicDetails: PassphraseDetails = {
       parts,
       separator,
+      passphrase: parts.join(separator),
+    };
+
+    // Enhance with GPT-4o if mode is gpt-4o
+    if (mode === "gpt-4o") {
+      return this.enhanceWithGpt4o(basicDetails, stripUmlauts ?? true);
+    }
+
+    // Apply stripUmlauts for basic mode
+    const passphrase = stripUmlauts
+      ? PasswordGenerator.stripUmlauts(basicDetails.passphrase)
+      : basicDetails.passphrase;
+
+    return {
+      ...basicDetails,
       passphrase,
     };
   }
