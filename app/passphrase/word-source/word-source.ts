@@ -8,6 +8,6 @@ export interface WordSource {
 export async function fetchWordSource(url: string): Promise<WordSource> {
   const response = await fetch(url);
   const text = await response.text();
-  const words = text.split("\n");
+  const words = text.split("\n").map((word) => word.trim());
   return new ArrayWordSource(words);
 }

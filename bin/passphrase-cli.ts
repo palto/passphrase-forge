@@ -4,7 +4,6 @@ import { Command } from "commander";
 import { config } from "dotenv";
 import { getPasswordGenerator } from "@/lib/cli/wordlist-loader";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
-import { getGenerator } from "@/app/passphrase/generators/registry";
 
 // Load environment variables from .env.local quietly
 config({ path: ".env.local", quiet: true });
@@ -21,28 +20,21 @@ program
   .option("-c, --count <number>", "Number of passphrases to generate", "1")
   .option("--no-strip-umlauts", "Don't strip Finnish umlauts (ä, ö)")
   .option("--json", "Output as JSON")
-  .option(
-    "-g, --generator <type>",
-    "Generator type: basic, gpt-4o, gpt-5-mini, or claude",
-    "gpt-4o",
-  )
+  .option("-m, --mode <type>", "Generation mode: basic or gpt-4o", "gpt-4o")
   .action(async (options) => {
     try {
       const passwordGenerator = await getPasswordGenerator();
-      const passphraseGenerator = getGenerator(
-        options.generator,
-        passwordGenerator,
-      );
 
       const settings: Partial<GeneratorSettings> = {
         wordCount: parseInt(options.words),
         separator: options.separator,
         digits: parseInt(options.digits),
         stripUmlauts: options.stripUmlauts,
+        mode: options.mode,
       };
 
       const count = parseInt(options.count);
-      const passphrases = await passphraseGenerator.generateMultiple(
+      const passphrases = await passwordGenerator.generateMultiple(
         count,
         settings,
       );
