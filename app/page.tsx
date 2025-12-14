@@ -1,25 +1,12 @@
-import { PassphraseComponent } from "@/app/passphrase/passphrase-component";
-import { getPasswordGenerator } from "@/app/passphrase/server";
+import { PassphraseLoader } from "@/app/passphrase/passphrase-loader";
 import { Separator } from "@/components/ui/separator";
-import React from "react";
+import React, { Suspense } from "react";
 import { AppDetails } from "@/app/app-details";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Version } from "@/app/version/version";
-import {
-  defaultGeneratorSettings,
-  GeneratorSettings,
-  PassphraseDetails,
-} from "@/app/passphrase/password-generator";
-import { getCookie } from "cookies-next";
-import {
-  decodeSettings,
-  SETTINGS_COOKIE_NAME,
-} from "@/app/passphrase/settings-cookie";
-import { cookies } from "next/headers";
 export default async function Home() {
   const t = await getTranslations("Home");
-  const { passphrases, settings } = await generateInitialPassphrases(5);
 
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
@@ -35,10 +22,9 @@ export default async function Home() {
       </div>
       <h1 className="text-2xl">{t("welcome")}</h1>
       <Separator className="w-full" />
-      <PassphraseComponent
-        initialPassphrases={passphrases}
-        initialSettings={settings}
-      />
+      <Suspense fallback={<PassphraseSkeleton />}>
+        <PassphraseLoader />
+      </Suspense>
       <Separator className="w-full" />
       <AppDetails />
       <Separator className="w-full" />
@@ -47,24 +33,16 @@ export default async function Home() {
   );
 }
 
-async function generateInitialPassphrases(count: number = 5): Promise<{
-  passphrases: PassphraseDetails[];
-  settings: GeneratorSettings;
-}> {
-  const generator = await getPasswordGenerator();
-
-  // Read settings from cookie
-  const value = await getCookie(SETTINGS_COOKIE_NAME, { cookies });
-  const settings = value
-    ? (() => {
-        try {
-          return decodeSettings(value);
-        } catch {
-          return defaultGeneratorSettings;
-        }
-      })()
-    : defaultGeneratorSettings;
-
-  const passphrases = await generator.generateMultiple(count, settings);
-  return { passphrases, settings };
+function PassphraseSkeleton() {
+  return (
+    <div className="w-full space-y-4 animate-pulse">
+      <div className="space-y-3">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <div key={i} className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
+        ))}
+      </div>
+      <div className="h-16 bg-gray-200 dark:bg-gray-700 rounded" />
+      <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
+    </div>
+  );
 }

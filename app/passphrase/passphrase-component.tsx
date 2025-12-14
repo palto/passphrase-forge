@@ -3,7 +3,6 @@ import React, { useCallback, useState } from "react";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { HiSparkles } from "react-icons/hi2";
 import { Copy, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
@@ -77,7 +76,7 @@ export function PassphraseComponent({
       <Button
         onClick={generateAiPasswords}
         disabled={isLoading}
-        className="w-full h-16 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+        className="w-full h-16"
         data-testid="ai-generate-passphrase-button"
       >
         {isLoading ? (
@@ -86,10 +85,7 @@ export function PassphraseComponent({
             {t("generate")}
           </>
         ) : (
-          <>
-            <HiSparkles className="mr-2 h-6 w-6" />
-            {t("generate")}
-          </>
+          t("generate")
         )}
       </Button>
 
