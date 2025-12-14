@@ -12,7 +12,11 @@ const program = new Command();
 program
   .name("batch-generate")
   .description("Generate passphrases in batches")
-  .option("-t, --total <number>", "Total number of passphrases to generate", "20")
+  .option(
+    "-t, --total <number>",
+    "Total number of passphrases to generate",
+    "20",
+  )
   .option("-b, --batch-size <number>", "Number of passphrases per batch", "5")
   .option("-o, --output <filename>", "Output filename", "passphrases.txt")
   .action(async (options) => {
@@ -27,13 +31,34 @@ program
         console.log(`Batch ${i}/${batchCount}`);
 
         const isLastBatch = i === batchCount;
-        const currentBatchSize = isLastBatch ? total - (i - 1) * batchSize : batchSize;
+        const currentBatchSize = isLastBatch
+          ? total - (i - 1) * batchSize
+          : batchSize;
 
-        const passphrases = await passwordGenerator.generateMultiple(currentBatchSize, {
-          mode: "gpt-4o",
-        });
-        const output = passphrases.map((p) => p.passphrase).join("\n") + "\n";
+        let passphrases;
+        let attempt = 0;
+        const maxRetries = 3;
 
+        while (attempt < maxRetries) {
+          try {
+            passphrases = await passwordGenerator.generateMultiple(
+              currentBatchSize,
+              {
+                mode: "gpt-4o",
+                stripUmlauts: false,
+              },
+            );
+            break;
+          } catch (error) {
+            attempt++;
+            if (attempt >= maxRetries) {
+              throw error;
+            }
+            console.log(`  Retry ${attempt}/${maxRetries - 1}...`);
+          }
+        }
+
+        const output = passphrases!.map((p) => p.passphrase).join("\n") + "\n";
         appendFileSync(outputFile, output);
       }
 
