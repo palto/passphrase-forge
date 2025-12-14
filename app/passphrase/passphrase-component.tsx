@@ -8,8 +8,9 @@ import { Copy, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
-import { SettingsButton } from "@/app/passphrase/settings-button";
 import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 
 const PASSPHRASE_COUNT = 5;
 
@@ -45,23 +46,6 @@ export function PassphraseComponent({
     }
   }, [generatorSettings]);
 
-  const updateSettings = useCallback(
-    async (settings: GeneratorSettings) => {
-      setGeneratorSettings(settings);
-      setIsLoading(true);
-      try {
-        const passphraseDetails = await aiMultiplePassphraseEnhancement(
-          settings,
-          PASSPHRASE_COUNT,
-        );
-        setPassphrases(passphraseDetails);
-      } finally {
-        setIsLoading(false);
-      }
-    },
-    [setGeneratorSettings],
-  );
-
   return (
     <div data-testid="passphrase-generator" className="w-full space-y-4">
       <div className="space-y-3" data-testid="passphrases-container">
@@ -90,29 +74,39 @@ export function PassphraseComponent({
         ))}
       </div>
 
-      <div className="flex gap-4" data-testid="passphrase-actions">
-        <Button
-          onClick={generateAiPasswords}
-          disabled={isLoading}
-          className="flex-1 h-16 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
-          data-testid="ai-generate-passphrase-button"
-        >
-          {isLoading ? (
-            <>
-              <Loader2 className="mr-2 h-6 w-6 animate-spin" />
-              {t("aiGenerate")}
-            </>
-          ) : (
-            <>
-              <HiSparkles className="mr-2 h-6 w-6" />
-              {t("aiGenerate")}
-            </>
-          )}
-        </Button>
-        <SettingsButton
-          value={generatorSettings}
-          onChange={updateSettings}
-          disabled={isLoading}
+      <Button
+        onClick={generateAiPasswords}
+        disabled={isLoading}
+        className="w-full h-16 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600"
+        data-testid="ai-generate-passphrase-button"
+      >
+        {isLoading ? (
+          <>
+            <Loader2 className="mr-2 h-6 w-6 animate-spin" />
+            {t("generate")}
+          </>
+        ) : (
+          <>
+            <HiSparkles className="mr-2 h-6 w-6" />
+            {t("generate")}
+          </>
+        )}
+      </Button>
+
+      <div className="flex items-center justify-between">
+        <Label htmlFor="stripUmlauts" className="text-base">
+          {t("settings.stripUmlauts")}
+        </Label>
+        <Switch
+          id="stripUmlauts"
+          checked={generatorSettings.stripUmlauts ?? false}
+          onCheckedChange={(checked) => {
+            setGeneratorSettings({
+              ...generatorSettings,
+              stripUmlauts: checked,
+            });
+          }}
+          data-testid="strip-umlauts-toggle"
         />
       </div>
     </div>
