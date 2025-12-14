@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeModeScript } from "flowbite-react";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
 import { AppNavbar } from "@/app/app-navbar";
 import { Analytics } from "@vercel/analytics/react";
-import { ThemeInit } from "@/.flowbite-react/init";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,20 +21,19 @@ export default async function RootLayout({
   const messages = await getMessages();
   return (
     <html lang={locale} suppressHydrationWarning>
-      <head>
-        <ThemeModeScript />
-      </head>
-      <body
-        className={`${inter.className} bg-white text-gray-700 dark:bg-gray-900 dark:text-gray-300`}
-      >
-        <>
-          <ThemeInit />
+      <body className={inter.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
           <NextIntlClientProvider messages={messages}>
             <AppNavbar />
             {children}
             <Analytics />
           </NextIntlClientProvider>
-        </>
+        </ThemeProvider>
       </body>
     </html>
   );

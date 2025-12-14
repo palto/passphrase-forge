@@ -1,14 +1,15 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import {
-  Button,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
-} from "flowbite-react";
-import { useBoolean } from "usehooks-ts";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useTranslations } from "next-intl";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 export function VersionDisplay(
   props: Readonly<{
@@ -17,24 +18,24 @@ export function VersionDisplay(
   }>,
 ) {
   const t = useTranslations("Home.changelog");
-  const {
-    value: show,
-    setTrue: showModal,
-    setFalse: hideModal,
-  } = useBoolean(false);
+  const [open, setOpen] = useState(false);
 
   return (
-    <>
-      <Button pill color="gray" onClick={showModal}>
-        v{props.version}
-      </Button>
-      <Modal dismissible show={show} onClose={hideModal}>
-        <ModalHeader>{t("title")}</ModalHeader>
-        <ModalBody>{props.children}</ModalBody>
-        <ModalFooter>
-          <Button onClick={hideModal}>{t("close")}</Button>
-        </ModalFooter>
-      </Modal>
-    </>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="rounded-full">
+          v{props.version}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{t("title")}</DialogTitle>
+        </DialogHeader>
+        <div className="py-4">{props.children}</div>
+        <DialogFooter>
+          <Button onClick={() => setOpen(false)}>{t("close")}</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

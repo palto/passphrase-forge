@@ -1,6 +1,6 @@
 import { PassphraseComponent } from "@/app/passphrase/passphrase-component";
 import { getPasswordGenerator } from "@/app/passphrase/server";
-import { HR } from "flowbite-react";
+import { Separator } from "@/components/ui/separator";
 import React from "react";
 import { AppDetails } from "@/app/app-details";
 import Image from "next/image";
@@ -34,14 +34,14 @@ export default async function Home() {
         />
       </div>
       <h1 className="text-2xl">{t("welcome")}</h1>
-      <hr></hr>
+      <Separator className="w-full" />
       <PassphraseComponent
         initialPassphrases={passphrases}
         initialSettings={settings}
       />
-      <HR className="w-full" />
+      <Separator className="w-full" />
       <AppDetails />
-      <HR className="w-full" />
+      <Separator className="w-full" />
       <Version />
     </main>
   );
