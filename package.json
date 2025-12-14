@@ -24,7 +24,8 @@
     "prettier:check": "prettier --check .",
     "vercel:env": "vercel env pull",
     "cli": "tsx bin/passphrase-cli.ts",
-    "cli:basic": "tsx bin/passphrase-cli.ts --generator basic"
+    "cli:basic": "tsx bin/passphrase-cli.ts --generator basic",
+    "cli:batch": "tsx bin/batch-generate.ts"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^2.0.21",
