@@ -76,7 +76,7 @@ export function PassphraseComponent({
       <Button
         onClick={generateAiPasswords}
         disabled={isLoading}
-        className="w-full h-16"
+        className="w-full"
         data-testid="ai-generate-passphrase-button"
       >
         {isLoading ? (

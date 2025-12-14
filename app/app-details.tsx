@@ -16,18 +16,20 @@ function DetailsFi() {
     <>
       <h2 className="text-xl">Mikä se Salasanaseppä oikein on?</h2>
       <p className="text-sm">
-        Salasanaseppä luo turvallisia mutta helposti muistettavia salasanoja
-        joita voit käyttää missä tahansa palvelussa johon rekisteröityminen
-        vaatii salasanan keksimisen. Luoduissa salasanoissa on aina isoja ja
-        pieniä kirjamia, erikoismerkkejä ja numeroita. Salasanassa 3 tavallista
-        sanaa ja 1 numerosarja. Sanat ja numerosarjat on eroteltu toisistaan
-        viivan ( - ) merkillä.
+        Salasanaseppä luo turvallisia ja helposti muistettavia salasanoja
+        käyttämällä Kotuksen virallista suomen kielen sanalistaa siemensanoina.
+        Tekoäly muokkaa nämä siemensanat kieliopillisesti oikeiksi, helposti
+        muistettaviksi lauseiksi. Jokaisessa salasanassa on isoja ja pieniä
+        kirjaimia, erikoismerkkejä ja numeroita, muotoiltuna luonnolliseksi
+        suomalaiseksi lauseeksi numerosarjan kanssa.
       </p>
       <h2 className="text-xl">Miksi salasanat on helppo muistaa?</h2>
       <p className="text-sm">
-        Salasanat ovat helppoja muistaa, koska niissä on käytetty suomen kielen
-        sanoja. Salasanaseppä on oppinut sanat Kotimaisten kielten keskuksen
-        Kaino sanastosta. Kaino-sanaston löydät osoitteesta
+        Salasanat ovat helppoja muistaa, koska tekoäly muodostaa Kotuksen
+        sanalistan sanoista järkeviä suomen kielen lauseita. Satunnaisten
+        sanojen sijaan saat kieliopillisesti oikean lauseen, jonka aivosi
+        muistavat helposti. Siemensanat tulevat Kotuksen (Kotimaisten kielten
+        keskus) virallisesta sanalistasta osoitteessa
         http://kaino.kotus.fi/sanat/nykysuomi/
       </p>
       <h2 className="text-xl">Muistaako Salasanaseppä salasanani?</h2>
@@ -39,10 +41,11 @@ function DetailsFi() {
         Miksi salasanasepän salasanat ovat turvallisia?
       </h2>
       <p className="text-sm">
-        Koska salasanasepän sanasto on niin pitkä, on salasanaa vaikea arvata
-        vaikka tietäisikin kuinka salasana on muodostettu. Jo pelkästään 3 sanan
-        oikeaan arvaamiseen tarvitaan 94 000 ^ 3 = 830 584 miljardia yritystä,
-        puhumattakaan vielä numerosarjan arvaamisesta!
+        Turvallisuus perustuu laajaan Kotuksen sanalistaan, jota käytetään
+        siemensanoina. Vaikka tietäisi miten salasanat muodostetaan, oikeiden
+        siemensanojen arvaaminen vaatii 94 000 ^ 3 = 830 584 miljardia yritystä.
+        Tekoälyn muunnos lisää monimutkaisuutta säilyttäen samalla
+        muistettavuuden.
       </p>
     </>
   );
@@ -53,19 +56,21 @@ function DetailsEn() {
     <>
       <h2 className="text-xl">What is Passphrase Forge?</h2>
       <p className="text-sm">
-        Passphrase Forge creates secure yet easy-to-remember passwords that you
-        can use for any service that requires a password upon registration. The
-        generated passwords always contain uppercase and lowercase letters,
-        special characters, and numbers. Each password consists of 3 common
-        words and 1 numeric sequence. The words and numeric sequences are
-        separated by a hyphen (-).
+        Passphrase Forge creates secure, memorable passwords by using words from
+        the official Kotus Finnish wordlist as seed material. AI then transforms
+        these seed words into grammatically correct, easy-to-remember sentences.
+        Each password contains uppercase and lowercase letters, special
+        characters, and numbers, formatted as a natural Finnish sentence with a
+        numeric sequence.
       </p>
       <h2 className="text-xl">Why are the passwords easy to remember?</h2>
       <p className="text-sm">
-        The passwords are easy to remember because they use Finnish words.
-        Passphrase Forge has learned the words from the Kaino vocabulary of the
-        Institute for the Languages of Finland. You can find the Kaino
-        vocabulary at http://kaino.kotus.fi/sanat/nykysuomi/
+        The passwords are easy to remember because AI transforms seed words from
+        the Kotus wordlist into natural Finnish sentences that make sense.
+        Instead of random words, you get grammatically correct phrases that your
+        brain can easily recall. The seed words come from the official Kotus
+        (Institute for the Languages of Finland) wordlist at
+        http://kaino.kotus.fi/sanat/nykysuomi/
       </p>
       <h2 className="text-xl">Does Passphrase Forge remember my password?</h2>
       <p className="text-sm">
@@ -74,10 +79,11 @@ function DetailsEn() {
       </p>
       <h2 className="text-xl">Why are Passphrase Forges passwords secure?</h2>
       <p className="text-sm">
-        Because Passphrase Forges vocabulary is so extensive, it is difficult to
-        guess the password even if one knows how it is constructed. Just
-        guessing the correct 3 words requires 94,000 ^ 3 = 830,584 billion
-        attempts, not to mention the numeric sequence!
+        The security comes from the vast Kotus wordlist used as seed material.
+        Even knowing how the passwords are constructed, guessing the correct
+        seed words requires 94,000 ^ 3 = 830,584 billion attempts. The AI
+        transformation adds another layer of complexity while maintaining
+        memorability.
       </p>
     </>
   );

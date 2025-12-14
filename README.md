@@ -1,13 +1,13 @@
 # Passphrase Forge (Salasanaseppa)
 
-A secure and memorable passphrase generator that creates unique passwords using Finnish language words, enhanced with AI to make them easier to remember and more fun.
+A secure and memorable passphrase generator that uses words from the official Kotus Finnish wordlist as seed material, then transforms them with AI into easy-to-remember, grammatically correct sentences.
 
 🔗 **Live Demo**: [salasanaseppa.com](https://salasanaseppa.com)
 
 ## Features
 
-- 🇫🇮 **Finnish Word-Based**: Generates passphrases using Finnish words for enhanced memorability
-- 🤖 **AI Enhancement**: Uses OpenAI GPT-4o-mini to create grammatically correct, memorable sentences
+- 🇫🇮 **Kotus Wordlist Foundation**: Uses official Finnish language words from Kotus (Institute for the Languages of Finland) as seed material
+- 🤖 **AI-Generated Memorability**: Transforms seed words into grammatically correct, easy-to-remember Finnish sentences using OpenAI GPT-4o
 - 🌍 **Internationalization**: Supports Finnish and English languages
 - 🌙 **Dark Mode**: Toggle between light and dark themes
 - 📱 **Responsive Design**: Optimized for both desktop and mobile devices
