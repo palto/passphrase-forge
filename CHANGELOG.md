@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2025.4.0] - 2025-12-14
+
+### Changed
+
+- AI-powered passphrase generation is now the only generation method
+- Migrated UI framework from Flowbite React to shadcn/ui for better customization and modern design
+- Simplified user interface with inline settings
+- Improved page load performance with React Suspense and streaming SSR
+- Updated app description to emphasize Kotus wordlist as seed material for AI transformation
+
+### Removed
+
+- Basic (non-AI) passphrase generation mode
+- Settings drawer - replaced with inline toggle for strip umlauts option
+
 ## [2025.3.0] - 2025-08-09
 
 ### Improved

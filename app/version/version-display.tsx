@@ -31,7 +31,7 @@ export function VersionDisplay(
         <DialogHeader>
           <DialogTitle>{t("title")}</DialogTitle>
         </DialogHeader>
-        <div className="py-4">{props.children}</div>
+        <div className="py-4 max-h-96 overflow-y-auto">{props.children}</div>
         <DialogFooter>
           <Button onClick={() => setOpen(false)}>{t("close")}</Button>
         </DialogFooter>

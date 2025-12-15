@@ -1,6 +1,6 @@
 {
   "name": "passphrase-forge",
-  "version": "2025.3.0",
+  "version": "2025.4.0",
   "private": true,
   "bin": {
     "passphrase": "./bin/passphrase.js"
