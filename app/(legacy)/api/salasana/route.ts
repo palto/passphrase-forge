@@ -43,7 +43,8 @@ export async function GET(request: NextRequest) {
   }
 
   const passwordGenerator = await getPasswordGenerator();
-  return NextResponse.json({ password: passwordGenerator.generate() });
+  const password = await passwordGenerator.generate();
+  return NextResponse.json({ password: password });
 }
 
 export const dynamic = "force-dynamic";
