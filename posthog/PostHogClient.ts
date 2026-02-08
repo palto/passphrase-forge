@@ -14,7 +14,7 @@ export default function PostHogClient() {
 }
 
 export async function captureServerSide(props: EventMessage) {
-  if (process.env.NODE_ENV === "test") return;
+  if (process.env.VITEST) return;
 
   const cookieName = "ph_" + process.env.NEXT_PUBLIC_POSTHOG_KEY + "_posthog";
   const cookieStore = await cookies();
