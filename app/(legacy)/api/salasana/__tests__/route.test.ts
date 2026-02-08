@@ -7,12 +7,7 @@ vi.mock("@/app/passphrase/server", () => ({
   getPasswordGenerator: vi.fn(),
 }));
 
-vi.mock("@/app/passphrase/ai/actions", () => ({
-  aiPassphraseEnhancement: vi.fn(),
-}));
-
 import { getPasswordGenerator } from "@/app/passphrase/server";
-import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import type { PasswordGenerator } from "@/app/passphrase/password-generator";
 
 describe("GET /api/salasana", () => {
@@ -22,20 +17,21 @@ describe("GET /api/salasana", () => {
   beforeEach(() => {
     vi.clearAllMocks();
 
-    // Mock traditional password generator
-    const mockGenerator: Pick<PasswordGenerator, "generate"> = {
+    // Mock password generator with both generate and generateDetails methods
+    const mockGenerator: Pick<
+      PasswordGenerator,
+      "generate" | "generateDetails"
+    > = {
       generate: vi.fn().mockReturnValue(mockTraditionalPassword),
+      generateDetails: vi.fn().mockResolvedValue({
+        passphrase: mockAiPassword,
+        parts: ["5", "Kissaa", "leikkii", "yhdessa"],
+        separator: "-",
+      }),
     };
     vi.mocked(getPasswordGenerator).mockResolvedValue(
       mockGenerator as PasswordGenerator,
     );
-
-    // Mock AI enhancement
-    vi.mocked(aiPassphraseEnhancement).mockResolvedValue({
-      passphrase: mockAiPassword,
-      parts: ["5", "Kissaa", "leikkii", "yhdessa"],
-      separator: "-",
-    });
   });
 
   function createRequest(queryParams: Record<string, string> = {}) {
@@ -56,7 +52,6 @@ describe("GET /api/salasana", () => {
       expect(response.status).toBe(200);
       expect(data).toEqual({ password: mockTraditionalPassword });
       expect(getPasswordGenerator).toHaveBeenCalledOnce();
-      expect(aiPassphraseEnhancement).not.toHaveBeenCalled();
     });
 
     it("should generate traditional password when ai=false", async () => {
@@ -67,7 +62,6 @@ describe("GET /api/salasana", () => {
       expect(response.status).toBe(200);
       expect(data).toEqual({ password: mockTraditionalPassword });
       expect(getPasswordGenerator).toHaveBeenCalledOnce();
-      expect(aiPassphraseEnhancement).not.toHaveBeenCalled();
     });
   });
 
@@ -76,11 +70,15 @@ describe("GET /api/salasana", () => {
       const request = createRequest({ ai: "true" });
       const response = await GET(request);
       const data = await response.json();
+      const mockGenerator =
+        await vi.mocked(getPasswordGenerator).mock.results[0].value;
 
       expect(response.status).toBe(200);
       expect(data).toEqual({ password: mockAiPassword });
-      expect(aiPassphraseEnhancement).toHaveBeenCalledOnce();
-      expect(getPasswordGenerator).not.toHaveBeenCalled();
+      expect(getPasswordGenerator).toHaveBeenCalledOnce();
+      expect(mockGenerator.generateDetails).toHaveBeenCalledWith({
+        mode: "gpt-4o",
+      });
     });
   });
 
@@ -93,7 +91,6 @@ describe("GET /api/salasana", () => {
       expect(response.status).toBe(400);
       expect(data).toHaveProperty("error", "Invalid query parameters");
       expect(data).toHaveProperty("details");
-      expect(aiPassphraseEnhancement).not.toHaveBeenCalled();
       expect(getPasswordGenerator).not.toHaveBeenCalled();
     });
 
@@ -146,13 +143,20 @@ describe("GET /api/salasana", () => {
   describe("Error handling", () => {
     it("should propagate AI enhancement errors", async () => {
       const errorMessage = "OpenAI API rate limit exceeded";
-      vi.mocked(aiPassphraseEnhancement).mockRejectedValue(
-        new Error(errorMessage),
+      const mockGenerator: Pick<
+        PasswordGenerator,
+        "generate" | "generateDetails"
+      > = {
+        generate: vi.fn().mockReturnValue(mockTraditionalPassword),
+        generateDetails: vi.fn().mockRejectedValue(new Error(errorMessage)),
+      };
+      vi.mocked(getPasswordGenerator).mockResolvedValue(
+        mockGenerator as PasswordGenerator,
       );
 
       const request = createRequest({ ai: "true" });
 
-      await expect(GET(request)).rejects.toThrow(errorMessage);
+      expect(GET(request)).rejects.toThrow(errorMessage);
     });
 
     it("should propagate password generator errors", async () => {
@@ -163,7 +167,7 @@ describe("GET /api/salasana", () => {
 
       const request = createRequest();
 
-      await expect(GET(request)).rejects.toThrow(errorMessage);
+      expect(GET(request)).rejects.toThrow(errorMessage);
     });
   });
 });

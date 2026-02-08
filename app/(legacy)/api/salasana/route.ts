@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getPasswordGenerator } from "@/app/passphrase/server";
-import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { captureServerSide } from "@/posthog/PostHogClient";
 
 const querySchema = z.object({
@@ -45,13 +44,22 @@ export async function GET(request: NextRequest) {
   }
 
   const { ai: useAi } = result.data;
+  const passwordGenerator = await getPasswordGenerator();
 
   if (useAi) {
-    const enhancedResult = await aiPassphraseEnhancement();
+    void captureServerSide({
+      event: "passphrase_generated",
+      properties: {
+        count: 1,
+        generator_settings: undefined,
+      },
+    });
+    const enhancedResult = await passwordGenerator.generateDetails({
+      mode: "gpt-4o",
+    });
     return NextResponse.json({ password: enhancedResult.passphrase });
   }
 
-  const passwordGenerator = await getPasswordGenerator();
   const password = await passwordGenerator.generate();
   return NextResponse.json({ password: password });
 }
