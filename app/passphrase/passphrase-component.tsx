@@ -3,7 +3,8 @@ import React, { use, useCallback, useState } from "react";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Copy, Loader2 } from "lucide-react";
+import { Loader2 } from "lucide-react";
+import { CopyButton } from "@/components/ui/copy-button";
 import { useTranslations } from "next-intl";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie";
@@ -48,20 +49,16 @@ export function PassphraseComponent(props: {
               className="pr-10"
               data-testid={`passphrase-input-${index}`}
             />
-            <Button
-              variant="ghost"
-              size="icon"
+            <CopyButton
+              text={details.passphrase}
               className="absolute right-0 top-0 h-full"
-              onClick={() => {
+              onCopy={() => {
                 posthog.capture("copy_passphrase_button_click", {
                   passphrase_index: index,
                 });
-                void navigator.clipboard.writeText(details.passphrase);
               }}
               data-testid={`copy-passphrase-button-${index}`}
-            >
-              <Copy className="h-4 w-4" />
-            </Button>
+            />
           </div>
         ))}
       </div>
