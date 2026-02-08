@@ -79,7 +79,7 @@ The system uses two key extension points:
 
 ### Development Notes
 
-- Node.js 22+ required (Flowbite React CLI compatibility issue with Node 20)
+- Node.js 24+ required
 - TypeScript with strict mode enabled
 - Path aliases configured (`@/*` maps to root)
 - ESLint with Next.js and Prettier configurations

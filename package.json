@@ -6,7 +6,7 @@
     "passphrase": "./bin/passphrase.js"
   },
   "engines": {
-    "node": ">=22.x"
+    "node": ">=24.x"
   },
   "scripts": {
     "dev": "next dev",
