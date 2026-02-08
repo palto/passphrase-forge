@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2026.0.0] - 2026-02-08
+
+### Added
+
+- Visual feedback indicator on the copy password button to confirm successful copy
+
 ## [2025.4.0] - 2025-12-14
 
 ### Changed
