@@ -37,13 +37,6 @@ export async function aiMultiplePassphraseEnhancement(
   generatorSettings?: Partial<GeneratorSettings>,
   count: number = DEFAULT_PASSPHRASE_COUNT,
 ): Promise<PassphraseDetails[]> {
-  void captureServerSide({
-    event: "passphrase_generated",
-    properties: {
-      count: count,
-      generator_settings: generatorSettings,
-    },
-  });
   const passwordGenerator = await getPasswordGenerator();
   return passwordGenerator.generateMultiple(count, {
     ...generatorSettings,

@@ -5,7 +5,10 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Version } from "@/app/version/version";
 import { PassphraseComponent } from "@/app/passphrase/passphrase-component";
-import { defaultGeneratorSettings } from "@/app/passphrase/password-generator";
+import {
+  defaultGeneratorSettings,
+  GeneratorSettings,
+} from "@/app/passphrase/password-generator";
 import { getCookie } from "cookies-next";
 import {
   decodeSettings,
@@ -13,12 +16,13 @@ import {
 } from "@/app/passphrase/settings-cookie";
 import { cookies } from "next/headers";
 import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import { captureServerSide } from "@/posthog/PostHogClient";
+const PASSPHRASE_COUNT = 5;
+
 export default async function Home() {
   const t = await getTranslations("Home");
   const initialSettings = getInitialSettings();
-  const initialPassphrases = initialSettings.then((s) =>
-    aiMultiplePassphraseEnhancement(s, 5),
-  );
+  const initialPassphrases = initialSettings.then(generatePasswords);
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
       <div className="dark:bg-gray-300 rounded-2xl shadow-sm dark:shadow-gray-300 w-64">
@@ -37,6 +41,7 @@ export default async function Home() {
         <PassphraseComponent
           initialSettings={initialSettings}
           initialPassphrases={initialPassphrases}
+          generatePasswordsAction={generatePasswords}
         />
       </Suspense>
       <Separator className="w-full" />
@@ -73,4 +78,17 @@ async function getInitialSettings() {
         }
       })()
     : defaultGeneratorSettings;
+}
+
+async function generatePasswords(settings: GeneratorSettings) {
+  "use server";
+  void captureServerSide({
+    event: "passphrase_generated",
+    properties: {
+      $screen_name: "Front page",
+      count: PASSPHRASE_COUNT,
+      generator_settings: settings,
+    },
+  });
+  return aiMultiplePassphraseEnhancement(settings, PASSPHRASE_COUNT);
 }

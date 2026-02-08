@@ -5,21 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Copy, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { PassphraseDetails } from "@/app/passphrase/password-generator";
 import { setGeneratorSettingsCookie } from "@/app/passphrase/settings-cookie";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-
-const PASSPHRASE_COUNT = 5;
+import posthog from "posthog-js";
 
 export function PassphraseComponent(props: {
   readonly initialPassphrases: Promise<PassphraseDetails[]>;
   readonly initialSettings: Promise<GeneratorSettings>;
+  readonly generatePasswordsAction: (
+    settings: GeneratorSettings,
+  ) => Promise<PassphraseDetails[]>;
 }) {
   const t = useTranslations("PassphraseComponent");
   const initialSettings = use(props.initialSettings);
   const initialPassphrases = use(props.initialPassphrases);
+  const generatePasswordsAction = props.generatePasswordsAction;
   const [generatorSettings, setGeneratorSettingsState] =
     useState<GeneratorSettings>(initialSettings);
   const [passphrases, setPassphrases] =
@@ -30,19 +32,6 @@ export function PassphraseComponent(props: {
     setGeneratorSettingsState(settings);
     setGeneratorSettingsCookie(settings);
   }, []);
-
-  const generateAiPasswords = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const passphraseDetails = await aiMultiplePassphraseEnhancement(
-        generatorSettings,
-        PASSPHRASE_COUNT,
-      );
-      setPassphrases(passphraseDetails);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [generatorSettings]);
 
   return (
     <div data-testid="passphrase-generator" className="w-full space-y-4">
@@ -63,7 +52,12 @@ export function PassphraseComponent(props: {
               variant="ghost"
               size="icon"
               className="absolute right-0 top-0 h-full"
-              onClick={() => navigator.clipboard.writeText(details.passphrase)}
+              onClick={() => {
+                posthog.capture("copy_passphrase_button_click", {
+                  passphrase_index: index,
+                });
+                void navigator.clipboard.writeText(details.passphrase);
+              }}
               data-testid={`copy-passphrase-button-${index}`}
             >
               <Copy className="h-4 w-4" />
@@ -73,7 +67,17 @@ export function PassphraseComponent(props: {
       </div>
 
       <Button
-        onClick={generateAiPasswords}
+        onClick={async () => {
+          posthog.capture("generate_passphrase_button_click");
+          setIsLoading(true);
+          try {
+            const passphraseDetails =
+              await generatePasswordsAction(generatorSettings);
+            setPassphrases(passphraseDetails);
+          } finally {
+            setIsLoading(false);
+          }
+        }}
         disabled={isLoading}
         className="w-full"
         data-testid="ai-generate-passphrase-button"
