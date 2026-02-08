@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getPasswordGenerator } from "@/app/passphrase/server";
 import { aiPassphraseEnhancement } from "@/app/passphrase/ai/actions";
+import { captureServerSide } from "@/posthog/PostHogClient";
 
 const querySchema = z.object({
   ai: z
@@ -18,6 +19,14 @@ const querySchema = z.object({
  * @constructor
  */
 export async function GET(request: NextRequest) {
+  void captureServerSide({
+    event: "api:password_requested",
+    properties: {
+      count: 1,
+      $current_url: request.nextUrl.toString(),
+    },
+  });
+
   const searchParams = request.nextUrl.searchParams;
 
   // Parse and validate query parameters

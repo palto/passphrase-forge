@@ -4,6 +4,7 @@ import {
   PassphraseDetails,
 } from "@/app/passphrase/password-generator";
 import { getPasswordGenerator } from "@/app/passphrase/server";
+import { captureServerSide } from "@/posthog/PostHogClient";
 
 const DEFAULT_PASSPHRASE_COUNT = 5;
 
@@ -14,6 +15,13 @@ const DEFAULT_PASSPHRASE_COUNT = 5;
 export async function aiPassphraseEnhancement(
   generatorSettings?: Partial<GeneratorSettings>,
 ): Promise<PassphraseDetails> {
+  void captureServerSide({
+    event: "passphrase_generated",
+    properties: {
+      count: 1,
+      generator_settings: generatorSettings,
+    },
+  });
   const passwordGenerator = await getPasswordGenerator();
   return passwordGenerator.generateDetails({
     ...generatorSettings,
@@ -29,6 +37,13 @@ export async function aiMultiplePassphraseEnhancement(
   generatorSettings?: Partial<GeneratorSettings>,
   count: number = DEFAULT_PASSPHRASE_COUNT,
 ): Promise<PassphraseDetails[]> {
+  void captureServerSide({
+    event: "passphrase_generated",
+    properties: {
+      count: count,
+      generator_settings: generatorSettings,
+    },
+  });
   const passwordGenerator = await getPasswordGenerator();
   return passwordGenerator.generateMultiple(count, {
     ...generatorSettings,
