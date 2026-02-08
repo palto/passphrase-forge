@@ -19,20 +19,20 @@ const querySchema = z.object({
  * @constructor
  */
 export async function GET(request: NextRequest) {
-  void captureServerSide({
-    event: "api:password_requested",
-    properties: {
-      count: 1,
-      $current_url: request.nextUrl.toString(),
-    },
-  });
-
   const searchParams = request.nextUrl.searchParams;
 
   // Parse and validate query parameters
   const result = querySchema.safeParse(
     Object.fromEntries(searchParams.entries()),
   );
+
+  void captureServerSide({
+    event: "api:password_requested",
+    properties: {
+      $current_url: request.nextUrl.toString(),
+      request_query: result.data,
+    },
+  });
 
   if (!result.success) {
     return NextResponse.json(

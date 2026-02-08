@@ -22,10 +22,16 @@ export async function captureServerSide(props: EventMessage) {
   const distinctId = cookieValue
     ? JSON.parse(cookieValue).distinct_id
     : "placeholder";
+  const { properties: eventProperties, ...rest } = props;
 
   const client = PostHogClient();
   return client.captureImmediate({
     distinctId,
-    ...props,
+    ...rest,
+    properties: {
+      environment: process.env.VERCEL_ENV ?? "development",
+      $current_url: process.env.NEXT_PUBLIC_VERCEL_URL,
+      ...eventProperties,
+    },
   });
 }
