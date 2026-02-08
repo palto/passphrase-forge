@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { use, useCallback, useState } from "react";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,14 +13,13 @@ import { Switch } from "@/components/ui/switch";
 
 const PASSPHRASE_COUNT = 5;
 
-export function PassphraseComponent({
-  initialPassphrases,
-  initialSettings,
-}: {
-  readonly initialPassphrases: PassphraseDetails[];
-  readonly initialSettings: GeneratorSettings;
+export function PassphraseComponent(props: {
+  readonly initialPassphrases: Promise<PassphraseDetails[]>;
+  readonly initialSettings: Promise<GeneratorSettings>;
 }) {
   const t = useTranslations("PassphraseComponent");
+  const initialSettings = use(props.initialSettings);
+  const initialPassphrases = use(props.initialPassphrases);
   const [generatorSettings, setGeneratorSettingsState] =
     useState<GeneratorSettings>(initialSettings);
   const [passphrases, setPassphrases] =
