@@ -37,7 +37,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(
       {
         error: "Invalid query parameters",
-        details: result.error.format(),
+        details: z.flattenError(result.error),
       },
       { status: 400 },
     );

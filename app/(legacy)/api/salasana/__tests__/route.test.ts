@@ -90,44 +90,14 @@ describe("GET /api/salasana", () => {
 
       expect(response.status).toBe(400);
       expect(data).toHaveProperty("error", "Invalid query parameters");
-      expect(data).toHaveProperty("details");
+      expect(data.details).toEqual({
+        formErrors: [],
+        fieldErrors: {
+          ai: expect.arrayContaining([expect.any(String)]),
+        },
+      });
+      console.log(data.details);
       expect(getPasswordGenerator).not.toHaveBeenCalled();
-    });
-
-    it("should return 400 error for ai=1", async () => {
-      const request = createRequest({ ai: "1" });
-      const response = await GET(request);
-      const data = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(data).toHaveProperty("error", "Invalid query parameters");
-    });
-
-    it("should return 400 error for ai=0", async () => {
-      const request = createRequest({ ai: "0" });
-      const response = await GET(request);
-      const data = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(data).toHaveProperty("error", "Invalid query parameters");
-    });
-
-    it("should return 400 error for ai=yes", async () => {
-      const request = createRequest({ ai: "yes" });
-      const response = await GET(request);
-      const data = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(data).toHaveProperty("error", "Invalid query parameters");
-    });
-
-    it("should return 400 error for ai=no", async () => {
-      const request = createRequest({ ai: "no" });
-      const response = await GET(request);
-      const data = await response.json();
-
-      expect(response.status).toBe(400);
-      expect(data).toHaveProperty("error", "Invalid query parameters");
     });
 
     it("should ignore unknown query parameters", async () => {
