@@ -15,8 +15,8 @@ import {
   SETTINGS_COOKIE_NAME,
 } from "@/app/passphrase/settings-cookie";
 import { cookies } from "next/headers";
-import { aiMultiplePassphraseEnhancement } from "@/app/passphrase/ai/actions";
 import { captureServerSide } from "@/posthog/PostHogClient";
+import { getPasswordGenerator } from "@/app/passphrase/server";
 const PASSPHRASE_COUNT = 5;
 
 export default async function Home() {
@@ -90,5 +90,9 @@ async function generatePasswords(settings: GeneratorSettings) {
       generator_settings: settings,
     },
   });
-  return aiMultiplePassphraseEnhancement(settings, PASSPHRASE_COUNT);
+  const passwordGenerator = await getPasswordGenerator();
+  return passwordGenerator.generateMultiple(PASSPHRASE_COUNT, {
+    ...settings,
+    mode: "gpt-4o",
+  });
 }
