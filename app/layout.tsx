@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { AppNavbar } from "@/app/app-navbar";
 import { Analytics } from "@vercel/analytics/react";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -16,9 +16,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const locale = await getLocale();
-  // Providing all messages to the client
-  // side is the easiest way to get started
-  const messages = await getMessages();
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
@@ -28,7 +25,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextIntlClientProvider messages={messages}>
+          <NextIntlClientProvider>
             <AppNavbar />
             {children}
             <Analytics />
