@@ -17,12 +17,28 @@ import {
 import { cookies } from "next/headers";
 import { captureServerSide } from "@/posthog/PostHogClient";
 import { getPasswordGenerator } from "@/app/passphrase/server";
+import {
+  getRandomPregenerated,
+  isPregeneratedConfigured,
+} from "@/app/passphrase/pregenerated";
 const PASSPHRASE_COUNT = 5;
 
 export default async function Home() {
   const t = await getTranslations("Home");
   const initialSettings = getInitialSettings();
-  const initialPassphrases = initialSettings.then(generatePasswords);
+  const initialPassphrases = initialSettings.then(async (settings) => {
+    if (!isPregeneratedConfigured) return generatePasswords(settings);
+    void captureServerSide({
+      event: "passphrase_generated",
+      properties: {
+        $screen_name: "Front page",
+        count: PASSPHRASE_COUNT,
+        generator_settings: settings,
+        pregenerated: true,
+      },
+    });
+    return getRandomPregenerated(PASSPHRASE_COUNT, settings);
+  });
   return (
     <main className="flex items-center flex-col pt-4 pb-4 space-y-4 mx-auto max-w-lg px-4">
       <div className="dark:bg-gray-300 rounded-2xl shadow-sm dark:shadow-gray-300 w-64">
