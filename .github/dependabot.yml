@@ -11,9 +11,17 @@ updates:
       # to the next even-numbered LTS.
       - dependency-name: "@types/node"
         update-types: ["version-update:semver-major"]
+    groups:
+      npm-patch:
+        update-types:
+          - patch
 
   - package-ecosystem: github-actions
     directory: /
     schedule:
       interval: daily
     open-pull-requests-limit: 5
+    groups:
+      github-actions-all:
+        patterns:
+          - "*"
