@@ -126,7 +126,7 @@ describe("GET /api/salasana", () => {
 
       const request = createRequest({ ai: "true" });
 
-      expect(GET(request)).rejects.toThrow(errorMessage);
+      await expect(GET(request)).rejects.toThrow(errorMessage);
     });
 
     it("should propagate password generator errors", async () => {
@@ -137,7 +137,7 @@ describe("GET /api/salasana", () => {
 
       const request = createRequest();
 
-      expect(GET(request)).rejects.toThrow(errorMessage);
+      await expect(GET(request)).rejects.toThrow(errorMessage);
     });
   });
 });
