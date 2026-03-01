@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@ai-sdk/gateway": "^3.0.39",
-    "@ai-sdk/openai": "^3.0.26",
+    "@ai-sdk/openai": "^3.0.37",
     "@next/bundle-analyzer": "16.1.6",
     "@opentelemetry/api": "^1.9.0",
     "@radix-ui/react-dialog": "^1.1.15",
