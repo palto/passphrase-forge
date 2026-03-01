@@ -10,7 +10,7 @@ updates:
       # versions (25.x, 27.x, …) are not LTS — upgrade manually when moving
       # to the next even-numbered LTS.
       - dependency-name: "@types/node"
-        update-types: [ "version-update:semver-major" ]
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /
