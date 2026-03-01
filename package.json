@@ -40,7 +40,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@vercel/analytics": "^1.6.1",
     "@vercel/otel": "^2.1.0",
-    "ai": "^6.0.77",
+    "ai": "^6.0.105",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
