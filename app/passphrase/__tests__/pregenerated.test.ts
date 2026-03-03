@@ -19,7 +19,8 @@ function makeFetch(text: string) {
 describe("getRandomPregenerated", () => {
   beforeEach(() => {
     vi.resetModules();
-    process.env.PREGENERATED_PASSPHRASES_URL = "https://example.com/passphrases";
+    process.env.PREGENERATED_PASSPHRASES_URL =
+      "https://example.com/passphrases";
   });
 
   it("returns exactly count items", async () => {
