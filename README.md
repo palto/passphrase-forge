@@ -11,16 +11,14 @@ A secure and memorable passphrase generator that uses words from the official Ko
 - 🌍 **Internationalization**: Supports Finnish and English languages
 - 🌙 **Dark Mode**: Toggle between light and dark themes
 - 📱 **Responsive Design**: Optimized for both desktop and mobile devices
-- 🔒 **Client-Side Generation**: Secure generation with offline wordlist caching
 - 📋 **Copy to Clipboard**: One-click copying of generated passphrases
-- ⚙️ **Customizable Settings**: Configure word count, separators, and other generation parameters
-- 📊 **Analytics**: Usage tracking with Vercel Analytics
+- 📊 **Analytics**: Usage tracking with PostHog
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js 22+ (required for Flowbite React compatibility)
+- Node.js 24+
 - npm
 - Vercel CLI ([installation instructions](https://vercel.com/docs/cli))
 
@@ -58,17 +56,22 @@ npm run dev
 - `npm run build` - Build for production
 - `npm run start` - Start production server
 - `npm run lint` - Run ESLint
+- `npm run typecheck` - Check TypeScript types
 - `npm run prettier` - Format code with Prettier
+- `npm run check` - Run all checks (typecheck, lint, prettier, tests)
 - `npm run test` - Run unit tests
+- `npm run test:watch` - Run tests in watch mode
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:ui` - Run tests with Vitest UI
 - `npm run test:ai` - Run AI quality tests (requires OpenAI API key)
 - `npm run vercel:env` - Pull environment variables from Vercel
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 with App Router
+- **Framework**: Next.js 16 with App Router
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + Flowbite React
-- **AI**: OpenAI GPT-4o-mini
+- **AI**: OpenAI GPT-4o
 - **Internationalization**: next-intl
 - **Data Fetching**: SWR
 - **Deployment**: Vercel
@@ -89,9 +92,3 @@ The project is automatically deployed to [salasanaseppa.com](https://salasanasep
 ## License
 
 This project is private and proprietary.
-
-## Roadmap
-
-- [ ] Support english passphrases
-- [ ] Wordlist in database
-- [ ] Pregenerated AI passphrases in database
