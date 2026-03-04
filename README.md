@@ -68,7 +68,7 @@ npm run dev
 
 ## Tech Stack
 
-- **Framework**: Next.js 16 with App Router
+- **Framework**: Next.js 16 with App Router + React Compiler
 - **Language**: TypeScript
 - **Styling**: Tailwind CSS + Flowbite React
 - **AI**: OpenAI GPT-4o
