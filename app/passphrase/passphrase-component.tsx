@@ -2,6 +2,7 @@
 import React, { use, useCallback, useState } from "react";
 import { GeneratorSettings } from "@/app/passphrase/password-generator";
 import { Button } from "@/components/ui/button";
+import { ButtonGroup } from "@/components/ui/button-group";
 import { Input } from "@/components/ui/input";
 import { Loader2 } from "lucide-react";
 import { CopyButton } from "@/components/ui/copy-button";
@@ -38,20 +39,18 @@ export function PassphraseComponent(props: {
     <div data-testid="passphrase-generator" className="w-full space-y-4">
       <div className="space-y-3" data-testid="passphrases-container">
         {passphrases.map((details, index) => (
-          <div
+          <ButtonGroup
             key={index}
-            className="relative"
+            className="w-full"
             data-testid={`passphrase-item-${index}`}
           >
             <Input
               value={details.passphrase}
               readOnly
-              className="pr-10"
               data-testid={`passphrase-input-${index}`}
             />
             <CopyButton
               text={details.passphrase}
-              className="absolute right-0 top-0 h-full"
               onCopy={() => {
                 posthog.capture("copy_passphrase_button_click", {
                   passphrase_index: index,
@@ -59,7 +58,7 @@ export function PassphraseComponent(props: {
               }}
               data-testid={`copy-passphrase-button-${index}`}
             />
-          </div>
+          </ButtonGroup>
         ))}
       </div>
 
