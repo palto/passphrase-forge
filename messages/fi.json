@@ -29,7 +29,8 @@
       "wordCount": "Sanoja: {count}",
       "separator": "Erotin",
       "digits": "Numeroita: {count}",
-      "stripUmlauts": "Poista ääkköset"
+      "stripUmlauts": "Poista ääkköset",
+      "characters": "{count} merkkiä"
     }
   }
 }

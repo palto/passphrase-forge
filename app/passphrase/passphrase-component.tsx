@@ -39,26 +39,30 @@ export function PassphraseComponent(props: {
     <div data-testid="passphrase-generator" className="w-full space-y-4">
       <div className="space-y-3" data-testid="passphrases-container">
         {passphrases.map((details, index) => (
-          <ButtonGroup
-            key={index}
-            className="w-full"
-            data-testid={`passphrase-item-${index}`}
-          >
-            <Input
-              value={details.passphrase}
-              readOnly
-              data-testid={`passphrase-input-${index}`}
-            />
-            <CopyButton
-              text={details.passphrase}
-              onCopy={() => {
-                posthog.capture("copy_passphrase_button_click", {
-                  passphrase_index: index,
-                });
-              }}
-              data-testid={`copy-passphrase-button-${index}`}
-            />
-          </ButtonGroup>
+          <div key={index} className="space-y-1">
+            <ButtonGroup
+              className="w-full"
+              data-testid={`passphrase-item-${index}`}
+            >
+              <Input
+                value={details.passphrase}
+                readOnly
+                data-testid={`passphrase-input-${index}`}
+              />
+              <CopyButton
+                text={details.passphrase}
+                onCopy={() => {
+                  posthog.capture("copy_passphrase_button_click", {
+                    passphrase_index: index,
+                  });
+                }}
+                data-testid={`copy-passphrase-button-${index}`}
+              />
+            </ButtonGroup>
+            <p className="text-xs text-muted-foreground">
+              {t("settings.characters", { count: details.passphrase.length })}
+            </p>
+          </div>
         ))}
       </div>
 
