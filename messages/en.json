@@ -29,7 +29,8 @@
       "wordCount": "Words: {count}",
       "separator": "Separator",
       "digits": "Digits: {count}",
-      "stripUmlauts": "Strip umlauts"
+      "stripUmlauts": "Strip umlauts",
+      "characters": "{count} characters"
     }
   }
 }

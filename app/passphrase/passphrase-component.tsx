@@ -60,7 +60,7 @@ export function PassphraseComponent(props: {
               />
             </ButtonGroup>
             <p className="text-xs text-muted-foreground">
-              {details.passphrase.length} characters
+              {t("settings.characters", { count: details.passphrase.length })}
             </p>
           </div>
         ))}
