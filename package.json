@@ -28,7 +28,7 @@
     "cli:batch": "tsx bin/batch-generate.ts"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.61",
+    "@ai-sdk/gateway": "^3.0.64",
     "@ai-sdk/openai": "^3.0.39",
     "@next/bundle-analyzer": "16.1.6",
     "@opentelemetry/api": "^1.9.0",
@@ -40,7 +40,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@vercel/analytics": "^1.6.1",
     "@vercel/otel": "^2.1.1",
-    "ai": "^6.0.108",
+    "ai": "^6.0.114",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
@@ -52,7 +52,7 @@
     "next-intl": "^4.8.3",
     "next-mdx-remote": "^6.0.0",
     "next-themes": "^0.4.6",
-    "posthog-js": "^1.357.1",
+    "posthog-js": "^1.357.2",
     "posthog-node": "^5.26.2",
     "radix-ui": "^1.4.3",
     "react": "19.2.4",
