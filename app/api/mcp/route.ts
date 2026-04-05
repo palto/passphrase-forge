@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     "Generate a secure Finnish passphrase using the same defaults as the web UI (3 words, 1 digit, hyphen separator)",
     async () => {
       const generator = await getPasswordGenerator();
-      const result = await generator.generateDetails();
+      const result = await generator.generateDetails({ mode: "gpt-4o" });
       return {
         content: [{ type: "text", text: result.passphrase }],
       };
