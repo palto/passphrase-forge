@@ -58,32 +58,12 @@ function DetailsFi({ mcpUrl }: { mcpUrl: string }) {
       <h2 className="text-xl">Käytä tekoälyassistentissasi</h2>
       <p className="text-sm">
         Salasanaseppä tukee MCP-protokollaa (Model Context Protocol), joten voit
-        generoida salasanoja suoraan tekoälyassistentistasi kuten Claude
-        Desktopista tai Claude Codesta.
-      </p>
-      <p className="text-sm">
-        Lisää palvelin Claude Desktop -asetuksiin (
-        <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">
-          claude_desktop_config.json
-        </code>
-        ):
+        generoida salasanoja suoraan tekoälyassistentistasi. Lisää tämä osoite
+        MCP-palvelimeksi assistentissasi:
       </p>
       <pre className="text-xs bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto w-full">
-        {`{
-  "mcpServers": {
-    "passphrase-forge": {
-      "type": "http",
-      "url": "${mcpUrl}"
-    }
-  }
-}`}
+        {mcpUrl}
       </pre>
-      <p className="text-sm">
-        Claude Codessa:{" "}
-        <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">
-          {`claude mcp add --transport http passphrase-forge ${mcpUrl}`}
-        </code>
-      </p>
     </>
   );
 }
@@ -125,32 +105,12 @@ function DetailsEn({ mcpUrl }: { mcpUrl: string }) {
       <h2 className="text-xl">Use inside your AI assistant</h2>
       <p className="text-sm">
         Passphrase Forge supports the MCP protocol (Model Context Protocol), so
-        you can generate passphrases directly from your AI assistant such as
-        Claude Desktop or Claude Code.
-      </p>
-      <p className="text-sm">
-        Add the server to your Claude Desktop config (
-        <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">
-          claude_desktop_config.json
-        </code>
-        ):
+        you can generate passphrases directly from your AI assistant. Add this
+        URL as an MCP server in your assistant:
       </p>
       <pre className="text-xs bg-gray-100 dark:bg-gray-800 p-3 rounded overflow-x-auto w-full">
-        {`{
-  "mcpServers": {
-    "passphrase-forge": {
-      "type": "http",
-      "url": "${mcpUrl}"
-    }
-  }
-}`}
+        {mcpUrl}
       </pre>
-      <p className="text-sm">
-        In Claude Code:{" "}
-        <code className="text-xs bg-gray-100 dark:bg-gray-800 px-1 rounded">
-          {`claude mcp add --transport http passphrase-forge ${mcpUrl}`}
-        </code>
-      </p>
     </>
   );
 }
