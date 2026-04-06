@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2026.1.0] - 2026-04-06
+
+### Added
+
+- Character length indicator displayed under each generated passphrase
+- Remote MCP server at `/api/mcp` for AI assistant integrations (e.g. Claude Desktop)
+- MCP installation instructions on the app details page
+- GitHub repository link in the navbar
+
+### Changed
+
+- Passphrase input and copy button now use a joined button group for a cleaner look
+
 ## [2026.0.0] - 2026-02-08
 
 ### Added
