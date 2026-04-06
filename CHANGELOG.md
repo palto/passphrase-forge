@@ -11,10 +11,6 @@ All notable changes to this project will be documented in this file.
 - MCP installation instructions on the app details page
 - GitHub repository link in the navbar
 
-### Changed
-
-- Passphrase input and copy button now use a joined button group for a cleaner look
-
 ## [2026.0.0] - 2026-02-08
 
 ### Added
