@@ -6,6 +6,7 @@ import React from "react";
 import { useTranslations } from "next-intl";
 import { changeLanguage } from "@/app/changeLanguage";
 import { IoLanguage } from "react-icons/io5";
+import { FaGithub } from "react-icons/fa6";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +40,16 @@ export function AppNavbar() {
       </Link>
       <div className="flex items-center gap-2">
         <ThemeToggle data-testid="dark-theme-toggle" />
+        <Button variant="ghost" size="icon" asChild>
+          <a
+            href="https://github.com/palto/passphrase-forge"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub repository"
+          >
+            <FaGithub className="h-5 w-5" />
+          </a>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" size="icon" data-testid="language-dropdown">
