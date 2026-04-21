@@ -28,7 +28,7 @@
     "cli:batch": "tsx bin/batch-generate.ts"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.99",
+    "@ai-sdk/gateway": "^3.0.104",
     "@ai-sdk/openai": "^3.0.53",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@next/bundle-analyzer": "16.2.4",
@@ -41,7 +41,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@vercel/analytics": "^2.0.1",
     "@vercel/otel": "^2.1.2",
-    "ai": "^6.0.162",
+    "ai": "^6.0.168",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
