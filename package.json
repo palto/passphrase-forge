@@ -28,8 +28,8 @@
     "cli:batch": "tsx bin/batch-generate.ts"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.105",
-    "@ai-sdk/openai": "^3.0.54",
+    "@ai-sdk/gateway": "^3.0.107",
+    "@ai-sdk/openai": "^3.0.55",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@next/bundle-analyzer": "16.2.4",
     "@opentelemetry/api": "^1.9.0",
@@ -41,7 +41,7 @@
     "@radix-ui/react-switch": "^1.2.6",
     "@vercel/analytics": "^2.0.1",
     "@vercel/otel": "^2.1.2",
-    "ai": "^6.0.170",
+    "ai": "^6.0.172",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "commander": "^14.0.3",
@@ -80,7 +80,7 @@
     "eslint": "^9.39.4",
     "eslint-config-next": "16.2.4",
     "eslint-config-prettier": "^10.1.8",
-    "jsdom": "^29.1.0",
+    "jsdom": "^29.1.1",
     "postcss": "^8",
     "prettier": "^3.8.3",
     "tailwindcss": "^4.2.1",
