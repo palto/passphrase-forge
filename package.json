@@ -44,7 +44,7 @@
     "ai": "^6.0.208",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "cookies-next": "^6.1.1",
     "idb": "^8.0.3",
     "lucide-react": "^1.21.0",
