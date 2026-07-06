@@ -47,7 +47,7 @@
     "commander": "^15.0.0",
     "cookies-next": "^6.1.1",
     "idb": "^8.0.3",
-    "lucide-react": "^1.21.0",
+    "lucide-react": "^1.22.0",
     "negotiator": "^1.0.0",
     "next": "16.2.10",
     "next-intl": "^4.13.1",
