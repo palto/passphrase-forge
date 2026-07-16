@@ -28,7 +28,7 @@
     "cli:batch": "tsx bin/batch-generate.ts"
   },
   "dependencies": {
-    "@ai-sdk/gateway": "^3.0.143",
+    "@ai-sdk/gateway": "^4.0.8",
     "@ai-sdk/openai": "^4.0.5",
     "@modelcontextprotocol/sdk": "^1.29.0",
     "@next/bundle-analyzer": "16.2.10",
